@@ -10,7 +10,7 @@ This page calls the data from the database
 -->
 
 <?php
-include_once('../Objects/SCov_PostIt_Obj.php');
+    require_once '../Objects/Scov_PostIt_Obj.php';
 
 class PostItData {
 
