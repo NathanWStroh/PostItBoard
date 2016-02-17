@@ -1,0 +1,44 @@
+/*
+ SCov_Post_It_Board 
+2016 
+*/
+/* 
+    Created on : Feb 11, 2016, 2:21:50 PM
+    Author     : nathan
+*/
+
+
+body{
+    margin: 5% 5%;
+}
+
+a{
+    text-decoration: none;   
+}
+th{
+    resize: horizontal;
+    overflow: auto;
+}
+.basicNav{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.basicNav li {
+    float: left;
+}
+
+.basicNav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.basicNav li a:hover {
+    background-color: #111;
+}
