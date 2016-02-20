@@ -24,29 +24,29 @@
             </tbody>
             <?php
             //creates collapsible table rows to allow for additional information.
-            $retrievePostIts = new $Scov_Retreva_Classl();
-            $postItList;
-            $postItList = $retrievePostIts . PostItData();
-
-            for ($row = 0; $row < $postItList . size(); $row++) {
-                //will need to add a way for the <tr line to add colors.
-                ?>
+//            $retrievePostIts = new $Scov_Retreva_Classl();
+//            $postItList;
+//            $postItList = $retrievePostIts . PostItData();
+//
+//            for ($row = 0; $row < $postItList . size(); $row++) {
+//                //will need to add a way for the <tr line to add colors.
+//                ?>
                 <tbody>
-                    <tr data-toggle="collapse" dtat-target="<?php '#row' . $row ?>" class="clickable" bgcolor="">
+                    <tr data-toggle="collapse" dtat-target="<?php //'#row' . $row ?>" class="clickable" bgcolor="">
                         <?php
-                        for ($col = 0; $col < 7; $col++) {
-                            echo "<td>" . $postItList[$row][$col] . "</td>";
-                        }
-                        ?>
+//                        for ($col = 0; $col < 7; $col++) {
+//                            echo "<td>" . $postItList[$row][$col] . "</td>";
+//                        }
+//                        ?>
                     </tr></tbody>
                 <tr>
                     <td colspan="7">
-                        <div id="<?php 'row' . $row ?>">                        
-                            <?php
-                            //additional information for current updates.
-                            echo '</div>';
-                            echo '</td>';
-                            echo '</tr>';
-                        }
-                        ?>
+                        <div id="<?php //'row' . $row ?>">                        
+                            //<?php
+//                            //additional information for current updates.
+//                            echo '</div>';
+//                            echo '</td>';
+//                            echo '</tr>';
+//                        }
+//                        ?>
                         </html>
