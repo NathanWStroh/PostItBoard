@@ -19,7 +19,7 @@ include_once("Admin_Header.php");
                     Team: <select> class="dropdown-menu" aria-labelledby="teamDropdown">
                         <?php
                         for ($placeholderValue = 1; $placeholderValue < 6; $placeholderValue++) {
-                            echo "<option>" . $placeholderValue . "</option>";
+                            echo "<option value='$placeholderValue'>" . $placeholderValue . "</option>";
                         }
                         ?>
                     </select><br><br>
@@ -30,11 +30,13 @@ include_once("Admin_Header.php");
                         }
                         ?>
                     </select><br><br>
-                    <textarea placeholder="Issues" cols='50'></textarea><br>
-                    Rep's Name: <input type="text" placeholder='will grab name via session' disabled>
-                    <p>Status</p>
-                    <p>closure</p>
-
+                    <input type="text" placeholder="Issues" size='60' maxlength="60"/><br><br>
+                    Rep's Name: <input type="text" placeholder='will grab name via session' disabled><br><br>
+                    
+                    <select> class="dropdown-menu" aria-labelledby="alertType">
+                        <option value="0">Standard Alert</option>
+                        <option value="1" style="background-color: yellow">Small Outage</option>
+                        <option value="2" style="background-color: orange">Major Outage</option>
                     <?php
                     $timestamp = time();
                     echo "<p> Timestamp: " . (date('m/d/Y  H:i', $timestamp)) . "</p>";

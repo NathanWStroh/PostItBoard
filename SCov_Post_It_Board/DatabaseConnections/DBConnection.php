@@ -3,16 +3,10 @@
 class DBConnection {
     
     //this function will need to be updated to allow for proper db connection on live server.
-    function AccessDatabase(){
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-        
+    public function __construct($host,$dbname,$user,$pass){
+
         try{
-        //create connection
-        $connection = new mysqli($servername,$username,$password);
-        echo "connection successful";
-        
+        $this->pdo= new PDO("localhost", $user, $pass);
         
         }catch(PDOException $e){
             echo "Connection failed: " .$e->getMessage();

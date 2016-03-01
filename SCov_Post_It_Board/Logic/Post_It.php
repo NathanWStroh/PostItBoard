@@ -1,5 +1,18 @@
 <?php
+require '../DatabaseConnections/PostItConnections.php';
+require '../Models/SCov_PostIt_Obj.php';
 
 class Post_It {
-    //put your code here
+    
+    function GrabPostItsFromDB(){
+        $postItObj = new SCov_PostIt_Obj();
+        $postItArray = [];        
+        $getPostIts = new PostItConnections();
+        
+        $postItArray = $getPostIts->GetPostIts();
+        
+        return $postItArray;
+    }
+    
+    
 }
