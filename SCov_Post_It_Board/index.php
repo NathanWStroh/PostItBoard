@@ -3,6 +3,8 @@
 $title = 'Post It Board';
 require 'resources/Resource_Headers.php';
 require 'Logic/Post_It.php';
+//require 'DatabaseConnections/PostItConnections.php';
+//require 'DatabaseConnections/DBConnection.php';
 ?>
 <!--<meta http-equiv="refresh" content="10" >-->
 <header>
@@ -15,6 +17,16 @@ require 'Logic/Post_It.php';
         </thread>
         <tbody>
             <?php
+            
+            $Test = new Post_It();
+            $Test->GrabPostItsFromDB();
+//            
+//            $user ='root';
+//            $pass ='root';
+//            
+//            $testingDB = new DBConnection($user, $pass);
+//            $testingDB->dbconnect($user, $pass);
+//            
 //                $getPostIts = new Post_It();
 //                
 //                $getPostIts->GrabPostItsFromDB();

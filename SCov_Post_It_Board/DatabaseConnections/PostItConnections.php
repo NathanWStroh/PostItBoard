@@ -3,26 +3,17 @@ require 'DBConnection.php';
 
 class PostItConnections {
     private $mySQLquery;
-    private $pdo;
-    
-    public function __construct($database){
-        $this->pdo= $database;
-    }
+    private $user= 'root';
+    private $pass= 'root';
     
     function GetPostIts(){
-        $host = 'localhost';
-        $dbname='scov_post_it';
-        $user='root';
-        $pass='root';
+             $user= 'root';
+     $pass= 'root';
+        $dbconn = new DBConnection();
         
-        $database = new Database($host,$dbname,$user,$pass);
+        $dbconn->dbconnect($user, $pass);
         
-        $sql = 'Select * from post_its';
-        
-        $statment = $this->pdo->prepare($sql);
-        $postIts= $statment->fetchAll();
-        
-        return $postIts;
+//        return $postIts;
     }
             
     function UpdatePostIt($PostItObj){
