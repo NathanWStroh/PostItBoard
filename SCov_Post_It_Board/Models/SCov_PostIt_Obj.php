@@ -9,12 +9,12 @@ Last Modified: 2-2-2016
 <?php
 class PostIts {
 	//variables
-	private $team, $partner, $issues, $issuedRep, $status; //strings
+	private $id, $team, $partner, $issues, $issuedRep, $status; //strings
 	private $entryDate, $closeDate; //date
-	
 
 	//getters
-	function getTeam()		{ return $this->team; }
+        function getPostItID()	{ return $this->id; }
+	function getTeam()	{ return $this->team; }
 	function getPartner()	{ return $this->partner; }
 	function getIssues()	{ return $this->issues; }
 	function getIssuedRep()	{ return $this->issuedRep; }
@@ -23,6 +23,7 @@ class PostIts {
 	function getCloseDate()	{ return $this->closeDate; }
 	
 	//setters
+	function setPostItID ($id) 	  {$this->id = $id; }
 	function setTeam($team) 		  {$this->team = $team; }	
 	function setPartner($partner) 	  {$this->partner = $partner; }
 	function setIssues($issues) 	  {$this->issues = $issues; }
@@ -31,4 +32,3 @@ class PostIts {
 	function setEntryDate($entryDate) {$this->entryDate = $entryDate; }
 	function setCloseDate($closeDate) {$this->closeDate = $closeDate; }
 }
-?>
