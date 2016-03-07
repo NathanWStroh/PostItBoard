@@ -36,11 +36,15 @@ class Post_It {
     }
 
     function UpdatePostIts($postItObj) {
+        //see bottom function. The goal is to add to the post it table once it is all complete.
         
+        $this->ComparePostItsForTableUpdate($currentPostItsList);
     }
 
     function CreatePostIts($postItObj) {
+        $postItConnection = new PostItConnections();
         
+        $postItConnection->CreatePostIt($PostItObj);
     }
 
     function ComparePostItsForTableUpdate($currentPostItsList) {

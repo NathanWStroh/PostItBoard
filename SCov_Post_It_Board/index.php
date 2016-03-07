@@ -8,10 +8,14 @@ require 'Logic/Post_It.php';
 //require 'DatabaseConnections/DBConnection.php';
 
 $getPostIts = new Post_It();
+
+if($_SESSION){
+    
+}
 ?>
 <!--<meta http-equiv="refresh" content="10" >-->
 <body>
-    <table class="table table-condensed">
+    <table class="table table-condensed" class="tablesorter" id="listOfPostIts">
         <thread>
             <th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th>
         </thread>

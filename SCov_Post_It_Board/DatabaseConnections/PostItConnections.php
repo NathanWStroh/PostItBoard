@@ -8,7 +8,7 @@ class PostItConnections {
     function GetPostIts() {
         $user = 'root';
         $pass = 'root';
-        $query = 'SELECT * FROM post_its';
+        $query = 'CALL GET_POST_ITS();';
         $postItObj = new PostIts();
         $postItsList = array();
 
@@ -65,19 +65,19 @@ class PostItConnections {
     }
 
     function CreatePostIt($PostItObj) {
-        $user = 'root';
-        $pass = 'root';
-        $query = 'Insert into post_its (team_id,partner,entry_date,issue,rep,state) ' . "Values ('"
+        $basicUsername = 'root';
+        $basicUserPassword = 'root';
+        $query = "CALL CREATE_NEW_POST_IT ('"
                 . $PostItObj->getTeam() . "','"
                 . $PostItObj->getPartner() . "','"
                 . $PostItObj->getEntryDate() . "','"
                 . $PostItObj->getIssues() . "','"
                 . $PostItObj->getIssuedRep() . "',"
-                . $PostItObj->getStatus() . "";
+                . $PostItObj->getStatus() . "',"
+                . $PostItObj->getCurrentNews().");";
 
         $connection = new DBConnection();
-
-        $dbconnection = $connection->dbconnect($user, $pass);
+        $dbconnection = $connection->dbconnect($basicUsername, $basicUserPassword);
 
         $dbconnection->close();
     }
