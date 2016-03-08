@@ -1,30 +1,29 @@
 <?php
-//include_once 'resources/SCov_Retrieval_Class.php';
 $title = 'Post It Board';
 require 'pages/Admin_Header.php';
 require 'resources/Resource_Headers.php';
 require 'Logic/Post_It.php';
-//require 'DatabaseConnections/PostItConnections.php';
-//require 'DatabaseConnections/DBConnection.php';
 
 $getPostIts = new Post_It();
 
-if($_SESSION){
+if ($_SESSION) {
     
 }
 ?>
-<!--<meta http-equiv="refresh" content="10" >-->
+<head>
+    <script src="resources/js/TableFunctionality.js" type="text/javascript"></script>
+</head>
+
 <body>
-    <table class="table table-condensed" class="tablesorter" id="listOfPostIts">
-        <thread>
-            <th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th>
-        </thread>
-        <tbody>
-            <?php
-            $getPostIts->GrabPostIts();
-            ?>
-        </tbody>
-        <script>
-            setInterval = (function, 1000);
-        </script>
-    </html>
+    <div id="listOfPostIts">
+        <table id="tableOfPosts" class="table table-condensed tablesorter">
+            <thead>
+                <tr><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
+            </thead>
+            <tbody>
+                <?php
+                $getPostIts->GrabPostIts();
+                ?>
+            </tbody>
+    </div>
+</html>

@@ -1,35 +1,26 @@
 <?php
-include_once "../resources/Resource_Headers.php";
-include_once "Admin_Header.php";
-include_once (dirname('__FILE__')) . '/Logic/Post_It.php';
+$title = 'Admin';
+include_once("../resources/Resource_Headers.php");
+include_once("Admin_Header.php");
+include_once '';
 
-$getPostIts = new Post_It();
 ?>
+<body>
 <body>
     <div class="container">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            <li><a href="#create" aria-controls="create" role="tab" data-toggle="tab" >Create New Post it</a></li>
+            <li class="active"><a href="#user" aria-controls="user" role="tab" data-toggle="tab">User Manager</a></li>
+            <li><a href="#team" aria-controls="team" role="tab" data-toggle="tab" >Team Manager</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="home">
-                <table id="tableOfPosts" class="table table-condensed" class="tablesorter">
-                    <thread>
-                        <th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th>
-                    </thread>
-                    <tbody>
-                        <?php
-                        $postItList = $getPostIts->GrabPostIts();
-                        
-                        
-                        ?>
-                    </tbody>        
+            <div class="tab-pane fade in active" id="user">
+                <p> Will have a list of Post It's that can be edited and have additional notes added to it.</p>                    
             </div>
-            <div class="tab-pane fade" id="create">
+            <div class="tab-pane fade" id="team">
                 <h3>Please fill out as accurately as possible.</h3>
                 <form>
-                    Team: <select> 
+                    Team: <select> class="dropdown-menu" aria-labelledby="teamDropdown">
                         <?php
                         for ($placeholderValue = 1; $placeholderValue < 6; $placeholderValue++) {
                             echo "<option value='$placeholderValue'>" . $placeholderValue . "</option>";

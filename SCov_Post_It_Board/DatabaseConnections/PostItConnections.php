@@ -41,32 +41,28 @@ class PostItConnections {
 
         $dbconnection->close();
     }
-
+    
+    //Just needs to have logic to check for difference and update the rows. 
     function UpdatePostIt($PostItObj) {
-        $user = 'root';
-        $pass = 'root';
-        $selectionQuery = 'SELECT * FROM post_its where id = ' . $PostItObj->getPostItID;
-        $query = 'UPDATE post_its SET';
-
-        $connection = new DBConnection();
-
-        $dbconnection = $connection->dbconnect($user, $pass);
-
-        try {
-            $OldPostIt = $dbconnection->query($selectionQuery);
-
-           
-        } catch (Exception $ex) {
-            echo "Error has occured with Update query: " . $ex->getMessage();
-        }
-
-
-        $dbconnection->close();
+//        $selectionQuery = 'SELECT * FROM post_its where id = ' . $PostItObj->getPostItID;
+//        $query = 'UPDATE post_its SET';
+//
+//        $connection = new DBConnection();
+//
+//        $dbconnection = $connection->dbconnect();
+//
+//        try {
+//            $OldPostIt = $dbconnection->query($selectionQuery);
+//           
+//        } catch (Exception $ex) {
+//            echo "Error has occured with Update query: " . $ex->getMessage();
+//        }
+//
+//        $dbconnection->close();
     }
 
     function CreatePostIt($PostItObj) {
-        $basicUsername = 'root';
-        $basicUserPassword = 'root';
+        
         $query = "CALL CREATE_NEW_POST_IT ('"
                 . $PostItObj->getTeam() . "','"
                 . $PostItObj->getPartner() . "','"
@@ -77,7 +73,7 @@ class PostItConnections {
                 . $PostItObj->getCurrentNews().");";
 
         $connection = new DBConnection();
-        $dbconnection = $connection->dbconnect($basicUsername, $basicUserPassword);
+        $dbconnection = $connection->dbconnect();
 
         $dbconnection->close();
     }

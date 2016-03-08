@@ -1,7 +1,6 @@
 <?php
-
-require_once (dirname('__FILE__')) . '/Models/User_Obj.php';
-require_once (dirname('__FILE__')) . '/DatabaseConnections/UserConnections.php';
+include_once (dirname('__FILE__')) . '/Models/User_Obj.php';
+include_once (dirname('__FILE__')) . '/DatabaseConnections/UserConnections.php';
 
 class UserControls {
 
@@ -28,5 +27,14 @@ class UserControls {
         $partnerList = $userConnection->RetrievePartnerList();
                
         return $partnerList;
+    }
+    
+    function UpdateUserPrivilege($userObj){
+        $userConnection = new UserConnections();
+        $userConnection->UpdateUserPrivilege($userObj);
+    }
+    
+    function CreateTeam($team){
+        
     }
 }
