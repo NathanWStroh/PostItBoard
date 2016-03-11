@@ -2,62 +2,51 @@
 include_once "../resources/Resource_Headers.php";
 include_once "Admin_Header.php";
 include_once '../Logic/Post_It.php';
+include_once '../Logic/PartnerTeamControls.php';
 
-$getPostIts = new Post_It();
+$title = 'Create Post It';
+$postIts = new Post_It();
+$partnerTeamController = new PartnerTeamControls();
+
+
+if (isset($_POST['submit'])) {
+
+    $postItObj = new PostIts();
+    $postItObj->setTeam($_POST['team']);
+    $postItObj->setIssuedRep($_POST['rep']);
+    $postItObj->setIssues($issues);
+    $postItObj->setIssues($issues);
+    $postItObj->setIssues($issues);
+    $postIts->CreatePostIts($postItObj);
+}
 ?>
 <body>
-    <div class="container">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            <li><a href="#create" aria-controls="create" role="tab" data-toggle="tab" >Create New Post it</a></li>
-        </ul>
+    <h3>Please fill out as accurately as possible.</h3> 
+    <form action=''>
 
-        <div class="tab-content">
-            <div class="tab-pane fade in active" id="home">
-                <table id="tableOfPosts" class="table table-condensed" class="tablesorter">
-                    <thread>
-                        <th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th>
-                    </thread>
-                    <tbody>
-                        <?php
-                        $postItList = $getPostIts->GrabPostIts();
-                        
-                        
-                        ?>
-                    </tbody>        
-            </div>
-            <div class="tab-pane fade" id="create">
-                <h3>Please fill out as accurately as possible.</h3>
-                <form>
-                    Team: <select> 
-                        <?php
-                        for ($placeholderValue = 1; $placeholderValue < 6; $placeholderValue++) {
-                            echo "<option value='$placeholderValue'>" . $placeholderValue . "</option>";
-                        }
-                        ?>
-                    </select><br><br>
-                    Partner: <select> class="dropdown-menu" aria-labelledby="teamDropdown">
-                        <?php
-                        for ($placeholderValue = 1; $placeholderValue < 6; $placeholderValue++) {
-                            echo "<option> Partner: " . $placeholderValue . "</option>";
-                        }
-                        ?>
-                    </select><br><br>
-                    <input type="text" placeholder="Issues" size='60' maxlength="60"/><br><br>
-                    Rep's Name: <input type="text" placeholder='will grab name via session' disabled><br><br>
+        Partner: <select>
+            <?php
+            $partnerList = $partnerTeamController->RetrievePartners();
 
-                    <select> class="dropdown-menu" aria-labelledby="alertType">
-                        <option value="0">Standard Alert</option>
-                        <option value="1" style="background-color: yellow">Small Outage</option>
-                        <option value="2" style="background-color: orange">Major Outage</option>
-                        <?php
-                        $timestamp = time();
-                        echo "<p> Timestamp: " . (date('m/d/Y  H:i', $timestamp)) . "</p>";
-                        ?>
-                        <button type='submit' class='btn btn-primary'>Submit</button>   
-                </form>
-            </div>
-        </div>
-    </div>
+            for ($row = 0; $row < count($partnerList); $row++) {
+                echo "<option value='" . $partnerList[$row]->getID . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
+            }
+            ?>
+        </select><br><br>
+        Basic Issues: <br>
+        <input type="text" name='issue' placeholder='basic issue. IE: Snow outage' size='60' maxlength="60"/><br><br>
+        Additional Information: <br>
+        <input type='text' name='news' placeholder='More information about issues.' size='60' /><br><br>
+        Post It Alert: <select> class="dropdown-menu" aria-labelledby="alertType">
+            <option value="0">Standard Alert</option>
+            <option value="1" style="background-color: yellow">Small Outage</option>
+            <option value="2" style="background-color: orange">Major Outage</option>
+        </select><br><br>
+        Rep's Name: <input type="text" name='rep' placeholder='nstroh' disabled><br><br>
+        Team: <input type='text' name='team' value='5' size='5' disabled/><br><br>
+
+        <button type='submit' class='btn btn-primary'>Submit</button>   
+    </form>
+
 </body>
 </html>

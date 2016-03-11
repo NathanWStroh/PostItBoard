@@ -116,25 +116,4 @@ class UserConnections {
         }
     }
 
-    function RetrievePartnerList() {
-        $connection = new DBConnection();
-        $dbconnection = $connection->dbconnect();
-        $query = 'CALL RETRIEVE_PARTNERS();';
-
-        $partnerList = array();
-
-        try {
-            $partners = $dbconnection->query($query);
-
-            if ($partners->num_rows > 0) {
-                while ($row = $partners->fetch_assoc()) {
-                    array_push($partnerList, $row);
-                }
-                return $partnerList;
-            }
-        } catch (Exception $ex) {
-            echo 'ERROR pulling partner list: ' . $dbconnection->connect_error;
-        }
-    }
-
 }

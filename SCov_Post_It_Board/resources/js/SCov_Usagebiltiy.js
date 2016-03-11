@@ -1,6 +1,6 @@
 $(document).ready(function ()
 {
-    function sortTable() {
+    function SortTable() {
         var rows = $('#tableOfPosts').get();
 
         rows.sort(function (a, b) {
@@ -21,6 +21,11 @@ $(document).ready(function ()
 
         });
     }
+    
+    $('#createNewPostItButton').click(function(){
+       alert('testing'); 
+    });
+    
 }
 );
 

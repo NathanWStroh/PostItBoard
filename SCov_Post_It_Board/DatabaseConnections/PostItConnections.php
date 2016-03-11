@@ -1,5 +1,4 @@
 <?php
-
 include_once 'DBConnection.php';
 include_once '../Models/SCov_PostIt_Obj.php';
 
@@ -14,7 +13,7 @@ class PostItConnections {
 
         $connection = new DBConnection();
 
-        $dbconnection = $connection->dbconnect($user, $pass);
+        $dbconnection = $connection->dbconnect();
         try {
             $postIts = $dbconnection->query($query);
             if ($postIts->num_rows > 0) {
@@ -66,7 +65,6 @@ class PostItConnections {
         $query = "CALL CREATE_NEW_POST_IT ('"
                 . $PostItObj->getTeam() . "','"
                 . $PostItObj->getPartner() . "','"
-                . $PostItObj->getEntryDate() . "','"
                 . $PostItObj->getIssues() . "','"
                 . $PostItObj->getIssuedRep() . "',"
                 . $PostItObj->getStatus() . "',"
