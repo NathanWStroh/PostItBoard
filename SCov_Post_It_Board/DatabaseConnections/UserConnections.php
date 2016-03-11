@@ -1,7 +1,7 @@
 <?php
 
 include_once 'DBConnection.php';
-include_once (dirname('__FILE__')) . '/Models/User_Obj.php';
+include_once '../Models/User_Obj.php';
 
 class UserConnections {
 
@@ -65,7 +65,7 @@ class UserConnections {
             $user = $dbconnection->query($query);
             if ($user->num_rows === 0 || $user === null) {
                 $dbconnection->query($createUserQuery);
-                $userObj->setRole() = "STANDARD USER";
+//                $userObj->setRole() = "STANDARD USER";
             }
             return $userObj;
 
@@ -128,7 +128,7 @@ class UserConnections {
 
             if ($partners->num_rows > 0) {
                 while ($row = $partners->fetch_assoc()) {
-                    array_push($userList, $row);
+                    array_push($partnerList, $row);
                 }
                 return $partnerList;
             }

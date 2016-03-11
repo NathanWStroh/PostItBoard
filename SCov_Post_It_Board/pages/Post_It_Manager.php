@@ -1,7 +1,7 @@
 <?php
 include_once "../resources/Resource_Headers.php";
 include_once "Admin_Header.php";
-include_once (dirname('__FILE__')) . '/Logic/Post_It.php';
+include_once '../Logic/Post_It.php';
 
 $getPostIts = new Post_It();
 ?>

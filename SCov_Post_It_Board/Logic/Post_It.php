@@ -1,7 +1,7 @@
 <?php
 
-require_once (dirname('__FILE__')) . '/DatabaseConnections/PostItConnections.php';
-require_once (dirname('__FILE__')) . '/Models/SCov_PostIt_Obj.php';
+include_once '../DatabaseConnections/PostItConnections.php';
+include_once '../Models/SCov_PostIt_Obj.php';
 
 class Post_It {
 

@@ -1,8 +1,8 @@
 <?php
 //start session
 
-//require_once '../Models/User_Obj.php';
-//require_once (dirname('__FILE__')) . '/Logic/UserControls.php';
+//include_once '../Models/User_Obj.php';
+//include_once (dirname('__FILE__')) . '/Logic/UserControls.php';
 //
 //
 if(session_id()=='' || !isset($_SESSION)){
@@ -21,7 +21,7 @@ if(session_id()=='' || !isset($_SESSION)){
     <h3>Need to add in logic for push notifications(long polling).</h3>
     <nav class="navbar navbar-default">
         <ul class="basicNav">
-            <li> <a href="../index.php">Home</a></li>
+            <li> <a href="../pages/home.php">Home</a></li>
             <li> <a href="../pages/Team_User_Panel.php" >Admin Panel</a></li>
             <li> <a href="../pages/Personal_Settings.php" >Personal Settings</a></li>      
             <li> <a href="../pages/Post_It_Manager.php" >Post It Manager</a></li> 

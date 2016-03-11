@@ -2,7 +2,6 @@
 $title = 'Admin';
 include_once("../resources/Resource_Headers.php");
 include_once("Admin_Header.php");
-include_once '';
 
 ?>
 <body>
