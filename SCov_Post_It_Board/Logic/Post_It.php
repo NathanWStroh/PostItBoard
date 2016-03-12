@@ -3,44 +3,35 @@
 include_once '../DatabaseConnections/PostItConnections.php';
 include_once '../Models/SCov_PostIt_Obj.php';
 
+//$postItObj = new PostIts();
+//$postItObj->setTeam($_POST['']);
+//$postItObj->setPartner($_POST['']);
+//$postItObj->setIssuedRep($_POST['']);
+//$postItObj->setIssues($_POST['']);
+//$postItObj->setCurrentNews($_POST['']);
+//$postItObj->setAlertStatus($_POST['']);
+//$postItObj->setIssuedRep($_POST['']);
+
+
+
 class Post_It {
 
     function GrabPostIts() {
-//        $postItObj = new SCov_PostIt_Obj();
         $postItConnection = new PostItConnections();
-
         $postItArray = $postItConnection->GetPostIts();
-        for ($row = 0; $row < count($postItArray); $row++) {
-            $status = intval($postItArray[$row]->getStatus());
-            echo '<tr>';
-            echo '<td>' . $postItArray[$row]->getTeam() . '</td>';
-            echo '<td>' . $postItArray[$row]->getPartner() . '</td>';
-            echo '<td>' . $postItArray[$row]->getEntryDate() . '</td>';
-            echo '<td>' . $postItArray[$row]->getIssues() . '</td>';
-            echo '<td>' . $postItArray[$row]->getIssuedRep() . '</td>';
-            switch ($status) {
-                case 0:
-                    echo '<td>open</td>';
-                    break;
-                case 1:
-                    echo '<td>closed</td>';
-                    break;
-                default:
-                    echo '<td>undefined</td>';
-                    break;
-            }
-            echo '<td>' . $postItArray[$row]->getCloseDate();
-            echo '</tr>';
-        }
+        
+        return $postItArray;
     }
 
     function UpdatePostIts($postItObj) {
-       
+       $postItConnections = new PostItConnections();
+       $postItConnections->UpdatePostIt($PostItObj);
     }
 
     function CreatePostIts($postItObj) {
-        
         $postItConnection = new PostItConnections();
+        $postItObj->setStatus() = 0;
+        
         $postItConnection->CreatePostIt($PostItObj);
     }
 

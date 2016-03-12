@@ -13,18 +13,21 @@ class UserControls {
         return $userObj;
     }
     
-    function SetNewUserSettings($userObj,$updatedUserSettings){
+    function SetNewUserSettings($userObj){
         $userConnection = new UserConnections();
         
-        $result = array_diff($userObj->getPartnerSettings, $updatedUserSettings);
-        foreach($result as $newSetting){
-            $userConnection->SaveUserSettings($newSetting);
-        }
     }
     
     function UpdateUserPrivilege($userObj){
         $userConnection = new UserConnections();
         $userConnection->UpdateUserPrivilege($userObj);
+    }
+    
+    function RetrieveUsers(){
+        $userConnections = new UserConnections();
+        $userList = $userConnections->PullUsers();
+        
+        return $userList;
     }
 
 }

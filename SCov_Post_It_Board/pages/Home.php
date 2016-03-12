@@ -15,6 +15,7 @@ if ($_SESSION) {
 </head>
 
 <body>
+    <p>***Will more than likely do a page refresh if time doesn't allow for partial page refresh.</p>
     <div id="listOfPostIts">
         <table id="tableOfPosts" class="table table-condensed tablesorter">
             <thead>
@@ -22,7 +23,44 @@ if ($_SESSION) {
             </thead>
             <tbody>
                 <?php
-                $getPostIts->GrabPostIts();
+                $postItArray = $getPostIts->GrabPostIts();
+
+                for ($row = 0; $row < count($postItArray); $row++) {
+                    $status = intval($postItArray[$row]->getStatus());
+                    $alert = intval($postItArray[$row]->getAlertStatus());
+                    switch ($alert) {
+                        case 0:
+                            echo '<tr>';
+                            break;
+                        case 1:
+                            echo  "<tr bgcolor='yellow'> ";
+                            break;
+                        case 2:
+                            echo "<tr bgcolor='orange'> ";
+                            break;
+                        default :
+                            echo '<tr>';
+                            break;
+                    }
+                    echo '<td>' . $postItArray[$row]->getTeam() . '</td>';
+                    echo '<td>' . $postItArray[$row]->getPartner() . '</td>';
+                    echo '<td>' . $postItArray[$row]->getEntryDate() . '</td>';
+                    echo '<td>' . $postItArray[$row]->getIssues() . '</td>';
+                    echo '<td>' . $postItArray[$row]->getIssuedRep() . '</td>';
+                    switch ($status) {
+                        case 0:
+                            echo '<td>open</td>';
+                            break;
+                        case 1:
+                            echo '<td>closed</td>';
+                            break;
+                        default:
+                            echo '<td>undefined</td>';
+                            break;
+                    }
+                    echo '<td>' . $postItArray[$row]->getCloseDate();
+                    echo '</tr>';
+                }
                 ?>
             </tbody>
     </div>

@@ -8,7 +8,7 @@ class UserConnections {
     function PullUsers() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'SELECT U.A_USERNAME '
+        $query = 'SELECT U.A_ID, U.A_USERNAME, UR.USER_RIGHTS '
                 . 'FROM USERS U, USER_RIGHTS UR '
                 . 'WHERE U.A_ID = UR.A_ID';
 
@@ -19,7 +19,13 @@ class UserConnections {
 
             if ($users->num_rows > 0) {
                 while ($row = $users->fetch_assoc()) {
-                    array_push($userList, $row);
+                    $userObj = new User_Obj();
+
+                    $userObj->setID($row['A_ID']);
+                    $userObj->setUsername($row['A_USERNAME']);
+                    $userObj->setRole($row['USER_RIGHTS']);
+
+                    array_push($userList, $userObj);
                 }
                 return $userList;
             }
@@ -33,12 +39,15 @@ class UserConnections {
         $dbconnection = $connection->dbconnect();
         $query = 'Call Get_User_Information(' . $username . ',' . $userPassword . ' );';
 
-        $userObj = new User_Obj();
+
         try {
             $user = $dbconnection->query($query);
 
             if ($user->num_rows === 1) {
                 while ($row = $user->fetch_assoc()) {
+
+                    $userObj = new User_Obj();
+
                     $userObj->setID($row['a_id']);
                     $userObj->setUsername($row['a_username']);
                     $userObj->setPassword($row['a_password']);
