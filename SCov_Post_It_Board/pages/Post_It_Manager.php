@@ -12,11 +12,10 @@ $partnerTeamController = new PartnerTeamControls();
 
 if (isset($_POST['submit'])) {
 
-    foreach ($_POST as $name => $val)
-{
-     echo htmlspecialchars($name . ': ' . $val) . "\n";
-}
-    
+    foreach ($_POST as $name => $val) {
+        echo htmlspecialchars($name . ': ' . $val) . "\n";
+    }
+
     $postItObj = new PostIts();
     $postItObj->setTeam($_POST['team']);
     $postItObj->setPartner($_POST['partner']);
@@ -24,36 +23,36 @@ if (isset($_POST['submit'])) {
     $postItObj->setIssues($_POST['issue']);
     $postItObj->setCurrentNews($_POST['news']);
     $postItObj->setAlertStatus($_POST['alert']);
-    
-    try{
-    $postIts->CreatePostIts($postItObj);
-    echo '<h3> Ticket has been added. </h3>';
+    $postItObj->setStatus(0);
+
+    try {
+        $postIts->CreatePostIts($postItObj);
+        echo '<h3> Ticket has been added. </h3>';
     } catch (Exception $ex) {
-        echo '<h3>'.$ex->getMessage().'</h3>';
+        echo '<h3>' . $ex->getMessage() . '</h3>';
     }
-    
 }
 ?>
 <body>
     <h3>Please fill out as accurately as possible.</h3> 
     <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
         Team: <select name='team'>
-            <?php
-            $teamList = $partnerTeamController->GetTeams();
+<?php
+$teamList = $partnerTeamController->GetTeams();
 
-            for ($row = 1; $row < count($teamList); $row++) {
-                echo "<option value='" . $teamList[$row]->getID() . "'>" . $teamList[$row]->getID() . ': ' . $teamList[$row]->getTeamName() . "</option>";
-            }
-            ?>
+for ($row = 1; $row < count($teamList); $row++) {
+    echo "<option value='" . $teamList[$row]->getID() . "'>" . $teamList[$row]->getID() . ': ' . $teamList[$row]->getTeamName() . "</option>";
+}
+?>
         </select><br><br>
         Partner: <select name='partner'>
-            <?php
-            $partnerList = $partnerTeamController->RetrievePartners();
+<?php
+$partnerList = $partnerTeamController->RetrievePartners();
 
-            for ($row = 0; $row < count($partnerList); $row++) {
-                echo "<option value='" . $partnerList[$row]->getID() . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
-            }
-            ?>
+for ($row = 0; $row < count($partnerList); $row++) {
+    echo "<option value='" . $partnerList[$row]->getPartnerName() . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
+}
+?>
         </select><br><br>
         Basic Issues: <br>
         <input required='true' type="text" name='issue' placeholder='basic issue. IE: Snow outage' size='60' maxlength="60"/><br><br>

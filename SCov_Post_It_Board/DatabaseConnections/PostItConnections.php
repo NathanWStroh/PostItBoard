@@ -21,16 +21,16 @@ class PostItConnections {
 
                     $postItObj = new PostIts();
 
-                    $postItObj->setPostItID($rows["id"]);
-                    $postItObj->setTeam($rows["team_id"]);
+                    $postItObj->setPostItID($rows["post_it_ID"]);
+                    $postItObj->setTeam($rows["TEAM_ID"]);
                     $postItObj->setPartner($rows["partner"]);
                     $postItObj->setIssuedRep($rows["rep"]);
                     $postItObj->setEntryDate($rows["entry_date"]);
                     $postItObj->setIssues($rows["issue"]);
-                    $postItObj->setCloseDate($rows["closure_date"]);
-                    $postItObj->setStatus($rows["state"]);
+                    $postItObj->setCloseDate($rows["close_date"]);
+                    $postItObj->setStatus($rows["STATE"]);
                     $postItObj->setAlertStatus($rows["alert_status"]);
-                    $postItObj->setCurrentNews($rows["news_about_post_it"]);
+                    $postItObj->setCurrentNews($rows["news"]);
 
                     array_push($postItsList, $postItObj);
                 }
@@ -45,7 +45,7 @@ class PostItConnections {
     }
 
     //Just needs to have logic to check for difference and update the rows. 
-    function UpdatePostIt($PostItObj) {
+    function UpdatePostIt($postItObj) {
 //        $selectionQuery = 'SELECT * FROM post_its where id = ' . $PostItObj->getPostItID;
 //        $query = 'UPDATE post_its SET';
 //
@@ -63,20 +63,43 @@ class PostItConnections {
 //        $dbconnection->close();
     }
 
-    function CreatePostIt($PostItObj) {
-
-        $query = "CALL CREATE_NEW_POST_IT ('"
-                . $PostItObj->getTeam() . "','"
-                . $PostItObj->getPartner() . "','"
-                . $PostItObj->getIssues() . "','"
-                . $PostItObj->getIssuedRep() . "',"
-                . $PostItObj->getStatus() . "',"
-                . $PostItObj->getCurrentNews() . ");";
+    function CreatePostIt($postItObj) {
+$query = "INSERT INTO post_its (TEAM_ID,partner,issue,news,rep,STATE,alert_status) VALUES ("
+        . $postItObj->getTeam(). ","
+        ."'".$postItObj->getPartner()."',"
+        ."'". $postItObj->getIssues()."',"
+        ."'".$postItObj->getCurrentNews()."',"
+        ."'".$postItObj->getIssuedRep()."',"
+        . $postItObj->getStatus().","
+        . $postItObj->getAlertStatus().")";
+//        
+//        $query = "CALL CREATE_NEW_POST_IT ('"
+//                . $postItObj->getTeam() . "','"
+//                . $postItObj->getPartner() . "','"
+//                . $postItObj->getIssues() . "','"
+//                . $postItObj->getIssuedRep() . "',"
+//                . $postItObj->getStatus() . "',"
+//                . $postItObj->getCurrentNews() . ");";
 
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
 
-        $dbconnection->close();
+        try{
+            echo '<p>Have made it to the try catch.</p>';
+            
+            if( $dbconnection->query($query)===TRUE){
+                echo '<p>Ticket has been added.</p>';
+            }else{
+                echo '<p>An issue occured running the query: '.$dbconnection->error.'</p>';
+            }
+            
+            
+            $dbconnection->close();
+        } catch (Exception $ex) {
+            echo "ERROR! A problem occured saving post it: ".$ex->getMessage();
+        }
+        
+        
     }
 
 }

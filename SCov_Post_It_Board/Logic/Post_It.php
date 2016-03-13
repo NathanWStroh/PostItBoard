@@ -3,17 +3,6 @@
 include_once '../DatabaseConnections/PostItConnections.php';
 include_once '../Models/SCov_PostIt_Obj.php';
 
-//$postItObj = new PostIts();
-//$postItObj->setTeam($_POST['']);
-//$postItObj->setPartner($_POST['']);
-//$postItObj->setIssuedRep($_POST['']);
-//$postItObj->setIssues($_POST['']);
-//$postItObj->setCurrentNews($_POST['']);
-//$postItObj->setAlertStatus($_POST['']);
-//$postItObj->setIssuedRep($_POST['']);
-
-
-
 class Post_It {
 
     function GrabPostIts() {
@@ -30,9 +19,8 @@ class Post_It {
 
     function CreatePostIts($postItObj) {
         $postItConnection = new PostItConnections();
-        $postItObj->setStatus() = 0;
         
-        $postItConnection->CreatePostIt($PostItObj);
+        $postItConnection->CreatePostIt($postItObj);
     }
 
     function ComparePostItsForTableUpdate($currentPostItsList) {
