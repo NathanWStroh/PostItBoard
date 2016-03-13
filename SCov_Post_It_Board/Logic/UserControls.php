@@ -8,7 +8,7 @@ class UserControls {
         $userConnection = new UserConnections();
         $userObj = $userConnection->UserLogin($username, $userPassword);
         
-        $userObj = $userConnection->UserSettings($userObj);
+//        $userObj = $userConnection->UserSettings($userObj);
         
         return $userObj;
     }

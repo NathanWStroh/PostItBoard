@@ -14,7 +14,19 @@ class PartnerTeamControls {
         return $teamList;
     }
 
-    function CreateTeam($team) {
+    function CreateTeam($teamName) {
+        $connection = new PartnerTeamConnections();
+        $connection->CreateTeam($teamName);
+             
+    }
+    function UpdateTeam($teamID,$teamName){
+        $connection = new PartnerTeamConnections();
+        $connection->UpdateTeam($teamID, $teamName);
+    }
+    
+    function DeleteTeam($teamID){
+        $connection = new PartnerTeamConnections();
+        $connection->DeleteTeam($teamID);
         
     }
 

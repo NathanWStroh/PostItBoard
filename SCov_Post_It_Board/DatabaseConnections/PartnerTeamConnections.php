@@ -21,8 +21,8 @@ class PartnerTeamConnections {
 
                     $partnerObj = new Partner_Obj();
 
-                    $partnerObj->setID($row["partnerID"]);
-                    $partnerObj->setPartnerName($row["parnterName"]);
+                    $partnerObj->setID($row["id"]);
+                    $partnerObj->setPartnerName($row["queue_name"]);
 
                     $partnerList[] = $partnerObj;
                 }
@@ -63,4 +63,44 @@ class PartnerTeamConnections {
         }
     }
 
+    function CreateTeam($teamName){
+        $connection = new DBConnection();
+        $dbconnection = $connection->dbconnect();
+        
+        $query = "INSERT INTO TEAM (TEAM) VALUES ('".$teamName."');";
+        
+        try{
+            $dbconnection->query($query);
+            
+        } catch (Exception $ex) {
+            echo 'ERROR has occured when creating team: '. $ex->getMessage();
+        }
+    }
+    
+    function UpdateTeam($teamID,$teamName){
+        $connection = new DBConnection();
+        $dbconnection = $connection->dbconnect();
+        
+        $query = "UPDATE scov_post_it.team SET team = '".$teamName. "' WHERE team_id =".$teamID.";";
+        
+        try{
+            $dbconnection->query($query);
+        } catch (Exception $ex) {
+            echo 'ERROR has occured updating team name: '.$ex->getMessage();
+        }
+        
+    }
+    
+    function DeleteTeam($teamID){
+        $connection = new DBConnection();
+        $dbconnection = $connection->dbconnect();
+        $query = 'DELETE FROM scov_post_it.team WHERE team_id ='.$teamID;
+        
+        try{
+            $dbconnection->query($query);
+        } catch (Exception $ex) {
+            echo 'An error has occured deleting the team name: '.$ex->getMessage();
+        }
+        
+    }
 }

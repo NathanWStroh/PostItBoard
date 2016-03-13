@@ -6,8 +6,6 @@ include_once '../Models/SCov_PostIt_Obj.php';
 class PostItConnections {
 
     function GetPostIts() {
-        $user = 'root';
-        $pass = 'root';
         $query = 'CALL GET_POST_ITS();';
         $postItsList = array();
 

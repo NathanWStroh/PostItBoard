@@ -1,16 +1,15 @@
 <?php
 
 include_once 'DBConnection.php';
+include_once 'PartnerTeamConnections.php';
 include_once '../Models/User_Obj.php';
 
 class UserConnections {
-
+    
     function PullUsers() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'SELECT U.A_ID, U.A_USERNAME, UR.USER_RIGHTS '
-                . 'FROM USERS U, USER_RIGHTS UR '
-                . 'WHERE U.A_ID = UR.A_ID';
+        $query = 'CALL GET_USERS()';
 
         $userList = array();
 
@@ -22,7 +21,8 @@ class UserConnections {
                     $userObj = new User_Obj();
 
                     $userObj->setID($row['A_ID']);
-                    $userObj->setUsername($row['A_USERNAME']);
+                    $userObj->setFirstName($row['A_FNAME']);
+                    $userObj->setLastName($row['A_LNAME']);
                     $userObj->setRole($row['USER_RIGHTS']);
 
                     array_push($userList, $userObj);
@@ -37,50 +37,62 @@ class UserConnections {
     function UserLogin($username, $userPassword) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'Call Get_User_Information(' . $username . ',' . $userPassword . ' );';
-
+        //non-procdural queries.
+        $LogInQuery = "select * from users where a_username ='" . $username . "' and a_password ='" . $userPassword . "';";
+        $VerifyUserQuery = "SELECT a_id from user_rights where a_id =";
+        $CreateUserQuery = 'INSERT INTO user_rights (a_id) Values (';
+        $GetUserInformationQuery = "select u.a_id, u.a_username, u.a_lname,u.a_fname,ur.USER_RIGHTS from users u, user_rights ur where u.a_id = ur.a_id and u.a_id =";
+        
+        //procdural queries
+//        $LogInQuery = 'Call log_in_procedure(' . $username . ',' . $userPassword . ' );';
+//        $VerifyUserQuery = "SELECT a_id from user_rights where a_id =";
+//        $GetUserInformationQuery = "select u.a_id, u.a_username, u.a_lname,u.a_fname,ur.USER_RIGHTS from users u, user_rights ur where u.a_id = ur.a_id and u.a_id =";
+//        $CreateUserQuery = 'INSERT INTO user_rights (a_id) Values (';
+        
 
         try {
-            $user = $dbconnection->query($query);
+            $result = $dbconnection->query($LogInQuery);
 
-            if ($user->num_rows === 1) {
-                while ($row = $user->fetch_assoc()) {
+            //checks to see if user exists
+            if ($result->num_rows === 1) {
+                while ($row = $result->fetch_assoc()) {
+                    $userID = $row['a_id'];
+                    echo $userID;
+                    $VerifyUserQuery =$VerifyUserQuery . $userID . ";";
+                    //creates new user if not in user_rights table
+                    $userExists = $dbconnection->query($VerifyUserQuery);
+                    if ($userExists->num_rows ===0) {
+                        
+                        $CreateUserQuery = $CreateUserQuery. $userID . ");";
+                        $dbconnection->query($CreateUserQuery);
+                        echo 'Welcome. Your account has been created.';
+                    }
+                    $GetUserInformationQuery = $GetUserInformationQuery. $userID . ";";
+                    $userResult = $dbconnection->query($GetUserInformationQuery);
+                    
+                    //retrieves user information
+                    if ($userResult->num_rows === 1) {
+                        while ($userRow = $userResult->fetch_assoc()) {
+                            $userObj = new User_Obj();
 
-                    $userObj = new User_Obj();
-
-                    $userObj->setID($row['a_id']);
-                    $userObj->setUsername($row['a_username']);
-                    $userObj->setPassword($row['a_password']);
-                    $userObj->setRole($row['a_role']);
+                            $userObj->setID($userRow['a_id']);
+                            $userObj->setFirstName($userRow['a_fname']);
+                            $userObj->setLastName($userRow['a_lname']);
+                            $userObj->setRole($userRow['USER_RIGHTS']);
+                            
+                            echo '<br><br>HELLO, '.$userObj->getFirstName().'!';
+                        }
+                        $dbconnection->close();
+                        return $userObj;
+                    }
                 }
+            } else {
+                echo 'Username and/or Password is incorrect.';
+                $dbconnection->close();
+                die();
             }
-
-            VerifyUser($userObj->getID());
-
-            $dbconnection->close();
-            return $userObj;
         } catch (Exception $ex) {
             echo 'Error Retrieving User Information: ' . $dbconnection->connect_error;
-        }
-    }
-
-    function VerifyUser($userObj) {
-        $connection = new DBConnection();
-        $dbconnection = $connection->dbconnect();
-        $query = 'CALL Verify_employee_exists(' . $userObj->getId() . ');';
-        $createUserQuery = 'CALL CREATE_USER(' . $userObj->getId() . ');';
-
-        try {
-            $user = $dbconnection->query($query);
-            if ($user->num_rows === 0 || $user === null) {
-                $dbconnection->query($createUserQuery);
-//                $userObj->setRole() = "STANDARD USER";
-            }
-            return $userObj;
-
-            $dbconnection->close();
-        } catch (Exception $ex) {
-            echo "Error occured verifying employee permissions: " . $dbconnection->connect_error;
         }
     }
 
@@ -89,18 +101,21 @@ class UserConnections {
     }
 
     function UserSettings($userObj) {
+        $partnerConnection = new PartnerTeamConnections();
+        $partnerList = $partnerConnection->RetrievePartnerList();
         $userSettingsList = array();
 
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'Call Get_User_Settings(' . $userObj->getUsername . ',' . $userObj->getPassword . ' );';
+        $createUserSettingsQuery = 'SELECT * FROM rep_partner_settings where userID ='.$userObj->getID();
+        $getUserSettingsQuery = 'select partnerID from rep_partner_settings where userID='.$userObj->getID();
 
         try {
-            $user = $dbconnection->query($query);
+            $verifySettings = $dbconnection->query($getUserSettingsQuery);
 
-            if ($user->num_rows > 0) {
+            if ($verifySettings->num_rows > 0) {
                 while ($row = $user->fetch_assoc()) {
-                    array_push($userSettingsList, $row['partnerVariable']);
+                    array_push($userSettingsList, $row['partnerID']);
                 }
                 $userObj->setPartnerSettings($userSettingsList);
             }

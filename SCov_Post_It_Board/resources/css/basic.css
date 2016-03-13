@@ -42,3 +42,9 @@ th{
 .basicNav li a:hover {
     background-color: #111;
 }
+
+#partners{
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+}

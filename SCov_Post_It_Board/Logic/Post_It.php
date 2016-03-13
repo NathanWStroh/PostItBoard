@@ -11,7 +11,7 @@ class Post_It {
         
         return $postItArray;
     }
-
+    
     function UpdatePostIts($postItObj) {
        $postItConnections = new PostItConnections();
        $postItConnections->UpdatePostIt($PostItObj);

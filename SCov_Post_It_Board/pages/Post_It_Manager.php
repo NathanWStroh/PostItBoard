@@ -12,9 +12,11 @@ $partnerTeamController = new PartnerTeamControls();
 
 if (isset($_POST['submit'])) {
 
-    foreach ($_POST as $name => $val) {
-        echo htmlspecialchars($name . ': ' . $val) . "\n";
-    }
+//    foreach ($_POST as $name => $val) {
+//        echo htmlspecialchars($name . ': ' . $val) . "\n";
+//    }
+    
+    //if exists, do update instead of create
 
     $postItObj = new PostIts();
     $postItObj->setTeam($_POST['team']);
@@ -32,6 +34,12 @@ if (isset($_POST['submit'])) {
         echo '<h3>' . $ex->getMessage() . '</h3>';
     }
 }
+if(isset($_GET['id'])){
+//    $postIts->
+    
+    
+}
+
 ?>
 <body>
     <h3>Please fill out as accurately as possible.</h3> 

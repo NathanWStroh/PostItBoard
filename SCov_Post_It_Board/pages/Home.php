@@ -17,7 +17,7 @@ if ($_SESSION) {
 <body>
     <p>***Will more than likely do a page refresh if time doesn't allow for partial page refresh.</p>
     <div id="listOfPostIts">
-        <table id="tableOfPosts" class="table table-condensed tablesorter">
+        <table id="tableOfPosts" class="table table-condensed" data-order='[[4,"DESC"]]'>
             <thead>
                 <tr><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
             </thead>
@@ -33,10 +33,10 @@ if ($_SESSION) {
                             echo '<tr>';
                             break;
                         case 1:
-                            echo  "<tr bgcolor='yellow'> ";
+                            echo "<tr style='background-color:yellow;'> ";
                             break;
                         case 2:
-                            echo "<tr bgcolor='orange'> ";
+                            echo "<tr style='background-color:orange;'> ";
                             break;
                         default :
                             echo '<tr>';
@@ -63,5 +63,6 @@ if ($_SESSION) {
                 }
                 ?>
             </tbody>
+        </table>
     </div>
 </html>

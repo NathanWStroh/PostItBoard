@@ -3,14 +3,36 @@ $title = 'Log In';
 
 include_once 'Admin_Header.php';
 include_once '../resources/Resource_Headers.php';
-include_once '../Logic/Post_It.php';
+include_once '../Logic/UserControls.php';
+
+$userController = new UserControls();
+
+if (isset($_POST['submit'])) {
+
+    foreach ($_POST as $name => $val) {
+        echo htmlspecialchars($name . ': ' . $val) . "\n";
+    }
+    
+    try{
+    $userObj = $userController->GetUserInformation($_POST['username'], $_POST['password']);        
+//    session_start();
+//    
+//    $_SESSION['first_name'] = $userObj->getFirstName();
+//    
+//    echo $_SESSION['first_name'];
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+    }
+
+}
+
 ?>
 
 <body>
-    <form>
+    <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
         username: <input type='text' name='username' required="true"/><br><br>
-        password: <input type='password' required="true"/><br><br>
-        <input type="submit" />
+        password: <input type='password' name='password' required="true"/><br><br>
+        <input name='submit' type='submit' class='btn btn-primary'/>
     </form>
 
 </body>
