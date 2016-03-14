@@ -14,7 +14,8 @@ class Post_It {
     
     function UpdatePostIts($postItObj) {
        $postItConnections = new PostItConnections();
-       $postItConnections->UpdatePostIt($PostItObj);
+       $postItConnections->UpdatePostIt($postItObj);
+       
     }
 
     function CreatePostIts($postItObj) {
@@ -22,17 +23,14 @@ class Post_It {
         
         $postItConnection->CreatePostIt($postItObj);
     }
-
-    function ComparePostItsForTableUpdate($currentPostItsList) {
-        $postItConnections = new PostItConnections();
-
-        $databasePostItList = $postItConnections->GetPostIts();
-
-        if ($databasePostItList != $currentPostItsList) {
-            echo '<script>$(#PostItTable tr).detach(); </script>';
-
-            $this->GrabPostIts();
-        }
+    
+    function GetTargetTicket($postItID){
+        $postItConnection = new PostItConnections();
+        $postItObj = new PostIts();
+        
+        $postItObj = $postItConnection->GetTicket($postItID);
+        
+        return $postItObj;
     }
 
 }

@@ -8,10 +8,6 @@ include_once '../Logic/UserControls.php';
 $userController = new UserControls();
 
 if (isset($_POST['submit'])) {
-
-    foreach ($_POST as $name => $val) {
-        echo htmlspecialchars($name . ': ' . $val) . "\n";
-    }
     
     try{
     $userObj = $userController->GetUserInformation($_POST['username'], $_POST['password']);        
@@ -30,8 +26,8 @@ if (isset($_POST['submit'])) {
 
 <body>
     <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
-        username: <input type='text' name='username' required="true"/><br><br>
-        password: <input type='password' name='password' required="true"/><br><br>
+        username: <input type='text' name='username' required="required"/><br><br>
+        password: <input type='password' name='password' required="required"/><br><br>
         <input name='submit' type='submit' class='btn btn-primary'/>
     </form>
 

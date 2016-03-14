@@ -16,7 +16,6 @@ if (session_id() == '' || !isset($_SESSION)) {
 //}
 ?>
 <header>
-    <h3>Long Polling will not be added as it doesn't make since with the refresh.</h3>
     <nav class="navbar navbar-default">
         <ul class="basicNav">
             <li> <a href="../pages/home.php">Home</a></li>

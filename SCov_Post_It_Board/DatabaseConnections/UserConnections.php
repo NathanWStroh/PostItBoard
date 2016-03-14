@@ -9,7 +9,7 @@ class UserConnections {
     function PullUsers() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'CALL GET_USERS()';
+        $query = "SELECT U.A_ID,U.A_FNAME,U.A_LNAME,UR.USER_RIGHTS FROM USERS U, USER_RIGHTS UR WHERE U.A_ID = UR.A_ID and USER_RIGHTS <> 'Super Admin'; ";
 
         $userList = array();
 
@@ -37,18 +37,12 @@ class UserConnections {
     function UserLogin($username, $userPassword) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        //non-procdural queries.
+
         $LogInQuery = "select * from users where a_username ='" . $username . "' and a_password ='" . $userPassword . "';";
         $VerifyUserQuery = "SELECT a_id from user_rights where a_id =";
         $CreateUserQuery = 'INSERT INTO user_rights (a_id) Values (';
         $GetUserInformationQuery = "select u.a_id, u.a_username, u.a_lname,u.a_fname,ur.USER_RIGHTS from users u, user_rights ur where u.a_id = ur.a_id and u.a_id =";
-        
-        //procdural queries
-//        $LogInQuery = 'Call log_in_procedure(' . $username . ',' . $userPassword . ' );';
-//        $VerifyUserQuery = "SELECT a_id from user_rights where a_id =";
-//        $GetUserInformationQuery = "select u.a_id, u.a_username, u.a_lname,u.a_fname,ur.USER_RIGHTS from users u, user_rights ur where u.a_id = ur.a_id and u.a_id =";
-//        $CreateUserQuery = 'INSERT INTO user_rights (a_id) Values (';
-        
+
 
         try {
             $result = $dbconnection->query($LogInQuery);
@@ -59,6 +53,7 @@ class UserConnections {
                     $userID = $row['a_id'];
                     echo $userID;
                     $VerifyUserQuery =$VerifyUserQuery . $userID . ";";
+                    
                     //creates new user if not in user_rights table
                     $userExists = $dbconnection->query($VerifyUserQuery);
                     if ($userExists->num_rows ===0) {
@@ -87,9 +82,8 @@ class UserConnections {
                     }
                 }
             } else {
-                echo 'Username and/or Password is incorrect.';
+                echo '<p style="color:red;">Username/Password does not exist in iTools.</p>';
                 $dbconnection->close();
-                die();
             }
         } catch (Exception $ex) {
             echo 'Error Retrieving User Information: ' . $dbconnection->connect_error;

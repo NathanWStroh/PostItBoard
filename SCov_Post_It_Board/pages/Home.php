@@ -15,11 +15,13 @@ if ($_SESSION) {
 </head>
 
 <body>
-    <p>***Will more than likely do a page refresh if time doesn't allow for partial page refresh.</p>
-    <div id="listOfPostIts">
-        <table id="tableOfPosts" class="table table-condensed" data-order='[[4,"DESC"]]'>
+    <div id='tooltip' class='tooltip'>
+        test
+    </div>
+    <div id="listOfPostIts" class='panel-body'>
+        <table id="tableOfPosts" class="table table-condensed" style='border-collapse:collapse' data-order='[[4,"DESC"]]'>
             <thead>
-                <tr><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
+                <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
             </thead>
             <tbody>
                 <?php
@@ -30,22 +32,22 @@ if ($_SESSION) {
                     $alert = intval($postItArray[$row]->getAlertStatus());
                     switch ($alert) {
                         case 0:
-                            echo '<tr>';
+                            echo "<tr><td>standard</td>";
                             break;
                         case 1:
-                            echo "<tr style='background-color:yellow;'> ";
+                            echo "<tr style='background-color:yellow;'><td>small</td>";
                             break;
                         case 2:
-                            echo "<tr style='background-color:orange;'> ";
+                            echo "<tr  style='background-color:orange;'><td>major</td> ";
                             break;
                         default :
-                            echo '<tr>';
+                            echo "<tr><td>standard</td>";
                             break;
                     }
                     echo '<td>' . $postItArray[$row]->getTeam() . '</td>';
                     echo '<td>' . $postItArray[$row]->getPartner() . '</td>';
                     echo '<td>' . $postItArray[$row]->getEntryDate() . '</td>';
-                    echo '<td>' . $postItArray[$row]->getIssues() . '</td>';
+                    echo "<td>" . $postItArray[$row]->getIssues() . '</td>';
                     echo '<td>' . $postItArray[$row]->getIssuedRep() . '</td>';
                     switch ($status) {
                         case 0:
@@ -58,8 +60,8 @@ if ($_SESSION) {
                             echo '<td>undefined</td>';
                             break;
                     }
-                    echo '<td>' . $postItArray[$row]->getCloseDate();
-                    echo '</tr>';
+                    echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
+                    echo "</tr>";
                 }
                 ?>
             </tbody>

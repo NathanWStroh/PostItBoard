@@ -12,9 +12,9 @@ if (isset($_POST['submit'])) {
 
     try {
         $partnerTeamController->CreateTeam($_POST['team']);
-        echo '<h3> Team has been added. </h3>';
+        echo '<p> Team has been added. </p>';
     } catch (Exception $ex) {
-        echo '<h3>' . $ex->getMessage() . '</h3>';
+        echo '<p>' . $ex->getMessage() . '</p>';
     }
 }
 if (isset($_POST['update'])) {
@@ -24,9 +24,9 @@ if (isset($_POST['update'])) {
         $teamName = $_POST['teamName'];
 
         $partnerTeamController->UpdateTeam($teamID, $teamName);
-        echo '<h3> Team has been UPDATED! </h3>';
+        echo '<p> Team has been UPDATED! </p>';
     } catch (Exception $ex) {
-        echo '<h3>' . $ex->getMessage() . '</h3>';
+        echo '<p>' . $ex->getMessage() . '</p>';
     }
 }
 
@@ -36,9 +36,9 @@ if (isset($_POST['delete'])) {
         $teamID = $_POST['teamID'];
 
         $partnerTeamController->DeleteTeam($teamID);
-        echo '<h3> Team has been deleted! </h3>';
+        echo '<p> Team has been deleted! </p>';
     } catch (Exception $ex) {
-        echo '<h3>' . $ex->getMessage() . '</h3>';
+        echo '<p>' . $ex->getMessage() . '</p>';
     }
 }
 ?>
@@ -49,7 +49,7 @@ if (isset($_POST['delete'])) {
     </form><br><br>
     <table id="tableOfPosts" class="table table-condensed">
         <thead>
-            <tr><td hidden="true"></td><td>Team ID</td><td>Team Name</td><td></td><td></td></tr>
+            <tr><td hidden></td><td>Team ID</td><td>Team Name</td><td></td><td></td></tr>
         </thead>
         <tbody>
             <?php

@@ -1,15 +1,3 @@
 <?php
 
-/*
- *  SCov_Post_It_Board  * 
- * 2016  * 
- */
-
-/**
- * Description of Admin_Partner_Controls
- *
- * @author nathan
- */
-class Admin_Partner_Controls {
-    //put your code here
-}
+//this will be updated after the project has been turned in. This will allow for Sam to edit partners...

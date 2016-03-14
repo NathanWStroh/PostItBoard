@@ -15,7 +15,6 @@ $getPostIts = new Post_It();
 </head>
 
 <body>
-    <p>***Will more than likely do a page refresh if time doesn't allow for partial page refresh.</p>
     <div id="listOfPostIts">
         <table id="tableOfPosts" class="table table-condensed tablesorter">
             <thead>
