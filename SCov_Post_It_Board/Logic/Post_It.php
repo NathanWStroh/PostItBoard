@@ -14,6 +14,7 @@ class Post_It {
     
     function UpdatePostIts($postItObj) {
        $postItConnections = new PostItConnections();
+       
        $postItConnections->UpdatePostIt($postItObj);
        
     }
@@ -31,6 +32,12 @@ class Post_It {
         $postItObj = $postItConnection->GetTicket($postItID);
         
         return $postItObj;
+    }
+    
+    function DeletePostIt($postItID){
+        $postItConnection = new PostItConnections();
+        
+        $postItConnection->DeletePostIt($postItID);
     }
 
 }

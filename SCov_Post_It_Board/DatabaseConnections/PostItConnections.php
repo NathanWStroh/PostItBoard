@@ -35,10 +35,10 @@ class PostItConnections {
                 $dbconnection->close();
                 return $postItsList;
             } else {
-                echo 'Error retreiving post-its: ' . $dbconnection->connect_error;
+                echo '<p style="color:red;">Error retreiving post-its: ' . $dbconnection->connect_error . '</p>';
             }
         } catch (Exception $ex) {
-            echo "Error has occured with Query: " . $ex->getMessage();
+            echo '<p style="color:red;"> Error has occured with Query:' . $ex->getMessage() . '</p>';
         }
     }
 
@@ -68,10 +68,10 @@ class PostItConnections {
                 $dbconnection->close();
                 return $postItObj;
             } else {
-                echo 'Error retreiving post-its: ' . $dbconnection->connect_error;
+                echo '<p style="color:red;">Error retreiving post-its: ' . $dbconnection->connect_error . '</p>';
             }
         } catch (Exception $ex) {
-            echo "Error has occured with Query: " . $ex->getMessage();
+            echo '<p style="color:red;">Error has occured with Query: ' . $ex->getMessage() . '</p>';
         }
     }
 
@@ -94,7 +94,7 @@ class PostItConnections {
             $query = $query . "where post_it_ID =" . $postItObj->getPostItID() . ";";
             $result = $dbconnection->query($query);
         } catch (Exception $ex) {
-            echo "Error has occured with Update query: " . $ex->getMessage();
+            echo '<p style="color:red;">Error has occured with Update query: ' . $ex->getMessage() . '</p>';
         }
 
         $dbconnection->close();
@@ -118,8 +118,21 @@ class PostItConnections {
             $dbconnection->query($query);
             $dbconnection->close();
         } catch (Exception $ex) {
-            echo "ERROR! A problem occured saving post it: " . $ex->getMessage();
+            echo '<p style="color:red;">ERROR! A problem occured saving post it: ' . $ex->getMessage() . '</p>';
         }
+    }
+
+    function DeletePostIt($postItID) {
+        $connection = new DBConnection();
+        $dbconnection = $connection->dbconnect();
+        $query = 'DELETE FROM scov_post_it.post_its WHERE post_it_ID ='. $postItID;
+       
+        try{
+            $result = $dbconnection->query($query);
+        } catch (Exception $ex) {
+            echo '<p style="color:red;">Error has occured with Delete query: ' . $ex->getMessage() . '</p>';
+        }
+        
     }
 
 }

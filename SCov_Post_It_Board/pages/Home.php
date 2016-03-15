@@ -4,7 +4,7 @@ include_once 'Admin_Header.php';
 include_once '../resources/Resource_Headers.php';
 include_once '../Logic/Post_It.php';
 
-$getPostIts = new Post_It();
+$PostItController = new Post_It();
 
 if ($_SESSION) {
     
@@ -25,7 +25,7 @@ if ($_SESSION) {
             </thead>
             <tbody>
                 <?php
-                $postItArray = $getPostIts->GrabPostIts();
+                $postItArray = $PostItController->GrabPostIts();
 
                 for ($row = 0; $row < count($postItArray); $row++) {
                     $status = intval($postItArray[$row]->getStatus());

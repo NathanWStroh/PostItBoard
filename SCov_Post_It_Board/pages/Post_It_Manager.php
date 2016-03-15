@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
             $postIts->UpdatePostIts($postItObj);
             echo '<p style="color:blue;">Post It has been updated.</p>';
         } catch (Exception $ex) {
-            echo '<p>' . $ex->getMessage() . '</p>';
+            echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
         }
     } else {
 
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
             $postIts->CreatePostIts($postItObj);
             echo '<p style="color:blue;">Ticket has been added.</p>';
         } catch (Exception $ex) {
-            echo '<p>' . $ex->getMessage() . '</p>';
+            echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
         }
     }
 }
@@ -52,7 +52,7 @@ if (isset($_GET['id'])) {
     try {
         $postItObj = $postIts->GetTargetTicket($_GET['id']);
     } catch (Exception $ex) {
-        echo 'Failed loading post it: ' . $ex->getMessage();
+        echo '<p style="color:red;">Failed loading post it: ' . $ex->getMessage().'</p>';
     }
 }
 ?>

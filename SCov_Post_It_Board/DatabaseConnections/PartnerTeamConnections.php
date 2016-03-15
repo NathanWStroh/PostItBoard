@@ -31,7 +31,7 @@ class PartnerTeamConnections {
                 return $partnerList;
             }
         } catch (Exception $ex) {
-            echo 'ERROR pulling partner list: ' . $ex->getMessage();
+            echo '<p style="color:red;">ERROR pulling partner list: ' . $ex->getMessage().'</p>';
         }
     }
 
@@ -59,7 +59,7 @@ class PartnerTeamConnections {
             $dbconnection->close();
             return $teamList;
         } catch (Exception $ex) {
-            echo "ERROR retrieving team information: " . $ex->getMessage();
+            echo '<p style="color:red;">ERROR retrieving team information: ' . $ex->getMessage().'</p>';
         }
     }
 
@@ -73,7 +73,7 @@ class PartnerTeamConnections {
             $dbconnection->query($query);
             
         } catch (Exception $ex) {
-            echo 'ERROR has occured when creating team: '. $ex->getMessage();
+            echo '<p style="color:red;">ERROR has occured when creating team: '. $ex->getMessage().'</p>';
         }
     }
     
@@ -86,7 +86,7 @@ class PartnerTeamConnections {
         try{
             $dbconnection->query($query);
         } catch (Exception $ex) {
-            echo 'ERROR has occured updating team name: '.$ex->getMessage();
+            echo '<p style="color:red;">ERROR has occured updating team name: '.$ex->getMessage().'</p>';
         }
         
     }
@@ -99,7 +99,7 @@ class PartnerTeamConnections {
         try{
             $dbconnection->query($query);
         } catch (Exception $ex) {
-            echo 'An error has occured deleting the team name: '.$ex->getMessage();
+            echo '<p style="color:red;">An error has occured deleting the team name: '.$ex->getMessage().'</p>';
         }
         
     }

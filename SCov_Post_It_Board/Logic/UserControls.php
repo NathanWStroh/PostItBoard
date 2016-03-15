@@ -16,6 +16,8 @@ class UserControls {
     function SetNewUserSettings($userObj){
         $userConnection = new UserConnections();
         
+        $userConnection->SaveUserSettings($userObj);
+        
     }
     
     function UpdateUserPrivilege($userObj){

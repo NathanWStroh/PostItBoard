@@ -30,7 +30,7 @@ class UserConnections {
                 return $userList;
             }
         } catch (Exception $ex) {
-            echo 'ERROR pulling user list: ' . $dbconnection->connect_error;
+            echo '<p style="color:red;">ERROR pulling user list: ' . $dbconnection->connect_error.'</p>';
         }
     }
 
@@ -60,7 +60,7 @@ class UserConnections {
                         
                         $CreateUserQuery = $CreateUserQuery. $userID . ");";
                         $dbconnection->query($CreateUserQuery);
-                        echo 'Welcome. Your account has been created.';
+                        echo '< p style="color:blue;">Welcome. Your account has been created.</p>';
                     }
                     $GetUserInformationQuery = $GetUserInformationQuery. $userID . ";";
                     $userResult = $dbconnection->query($GetUserInformationQuery);
@@ -74,8 +74,6 @@ class UserConnections {
                             $userObj->setFirstName($userRow['a_fname']);
                             $userObj->setLastName($userRow['a_lname']);
                             $userObj->setRole($userRow['USER_RIGHTS']);
-                            
-                            echo '<br><br>HELLO, '.$userObj->getFirstName().'!';
                         }
                         $dbconnection->close();
                         return $userObj;
@@ -86,7 +84,7 @@ class UserConnections {
                 $dbconnection->close();
             }
         } catch (Exception $ex) {
-            echo 'Error Retrieving User Information: ' . $dbconnection->connect_error;
+            echo '<p style="color:red;">Error Retrieving User Information: ' . $dbconnection->connect_error. '</p>';
         }
     }
 
@@ -114,7 +112,7 @@ class UserConnections {
                 $userObj->setPartnerSettings($userSettingsList);
             }
         } catch (Exception $ex) {
-            echo 'Error Retrieving User Settings: ' . $dbconnection->connect_error;
+            echo '<p style="color:red;">Error Retrieving User Settings: ' . $dbconnection->connect_error . '</p>';
         }
         $dbconnection->close();
         return $userObj();
@@ -130,7 +128,7 @@ class UserConnections {
             $dbconnection->query($query);
             $dbconnection->close();
         } catch (Exception $ex) {
-            echo 'Error occured saving user settings: ' . $dbconnection->connect_error;
+            echo '<p style="color:red;"> Error occured saving user settings: ' . $dbconnection->connect_error.'<p>';
         }
     }
 

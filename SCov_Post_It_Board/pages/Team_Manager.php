@@ -12,9 +12,9 @@ if (isset($_POST['submit'])) {
 
     try {
         $partnerTeamController->CreateTeam($_POST['team']);
-        echo '<p> Team has been added. </p>';
+        echo '<p style="color:blue;"> Team has been added. </p>';
     } catch (Exception $ex) {
-        echo '<p>' . $ex->getMessage() . '</p>';
+        echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
     }
 }
 if (isset($_POST['update'])) {
@@ -24,9 +24,9 @@ if (isset($_POST['update'])) {
         $teamName = $_POST['teamName'];
 
         $partnerTeamController->UpdateTeam($teamID, $teamName);
-        echo '<p> Team has been UPDATED! </p>';
+        echo '<p style="color:blue;"> Team has been UPDATED! </p>';
     } catch (Exception $ex) {
-        echo '<p>' . $ex->getMessage() . '</p>';
+        echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
     }
 }
 
@@ -36,9 +36,9 @@ if (isset($_POST['delete'])) {
         $teamID = $_POST['teamID'];
 
         $partnerTeamController->DeleteTeam($teamID);
-        echo '<p> Team has been deleted! </p>';
+        echo '<p style="color:blue;"> Team has been deleted! </p>';
     } catch (Exception $ex) {
-        echo '<p>' . $ex->getMessage() . '</p>';
+        echo '<pstyle="color:red;">' . $ex->getMessage() . '</p>';
     }
 }
 ?>
@@ -56,8 +56,8 @@ if (isset($_POST['delete'])) {
             $teamList = $partnerTeamController->GetTeams();
 
             for ($row = 1; $row < count($teamList); $row++) {
-                echo "<tr><form name=' form" . $row . " ' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
-                echo "<td hidden='true'><input type= 'text' name='teamID' value='" . $teamList[$row]->getID() . "'/></td>";
+                echo "<tr><form name='form" . $row . " ' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
+                echo "<td hidden><input type= 'text' name='teamID' value='" . $teamList[$row]->getID() . "'/></td>";
                 echo "<td>" . $teamList[$row]->getID() . "</td><td><input type='text' name='teamName' value='" . $teamList[$row]->getTeamName() . "'/></td>";
                 echo "<td><input id='update' type='submit' name='update' value='update'></td>";
                 echo "<td><input id='delete' type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete ".$teamList[$row]->getTeamName()."?');\"></td>";

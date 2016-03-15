@@ -10,16 +10,10 @@ $userController = new UserControls();
 if (isset($_POST['submit'])) {
     
     try{
-    $userObj = $userController->GetUserInformation($_POST['username'], $_POST['password']);        
-//    session_start();
-//    
-//    $_SESSION['first_name'] = $userObj->getFirstName();
-//    
-//    echo $_SESSION['first_name'];
+    $userObj = $userController->GetUserInformation($_POST['username'], $_POST['password']);
     } catch (Exception $ex) {
-        echo $ex->getMessage();
+        echo '<p style="color:red;">'.$ex->getMessage().'</p>';
     }
-
 }
 
 ?>

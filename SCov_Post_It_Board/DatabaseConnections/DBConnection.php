@@ -13,12 +13,12 @@ class DBConnection {
             $connection = new mysqli($servername, $basicLoginUsername, $basicLoginPassword, $database);
 
             if ($connection->connect_error) {
-                die("Connection failed: " . $connection->connect_error);
+                die('<p style="color:red;">Connection failed: ' . $connection->connect_error.'</p>');
                 }else{
                     return $connection;
                 }
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            echo '<p style="color:red;">Connection failed: ' . $e->getMessage().'</p>';
         }
     }
 }
