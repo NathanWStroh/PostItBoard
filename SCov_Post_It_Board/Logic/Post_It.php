@@ -12,6 +12,13 @@ class Post_It {
         return $postItArray;
     }
     
+    function GrabPostItsByUserId($userID){
+        $postItConnection = new PostItConnections();
+        $postItArray = $postItConnection->GetPostItsByUserID($userID);
+        
+        return $postItArray;
+    }
+    
     function UpdatePostIts($postItObj) {
        $postItConnections = new PostItConnections();
        

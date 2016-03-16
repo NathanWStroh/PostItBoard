@@ -8,16 +8,19 @@ class UserControls {
         $userConnection = new UserConnections();
         $userObj = $userConnection->UserLogin($username, $userPassword);
         
-//        $userObj = $userConnection->UserSettings($userObj);
-        
         return $userObj;
     }
     
-    function SetNewUserSettings($userObj){
+    function SetNewUserSettings($userSettingObj){
         $userConnection = new UserConnections();
+        $userConnection->SaveUserSettings($userSettingObj);
+    }
+    
+    function GrabUserSetting($userID){
+        $userConnections = new UserConnections();
+        $userSettings = $userConnections->GetUserSettings($userID);
         
-        $userConnection->SaveUserSettings($userObj);
-        
+        return $userSettings;
     }
     
     function UpdateUserPrivilege($userObj){
@@ -25,9 +28,9 @@ class UserControls {
         $userConnection->UpdateUserPrivilege($userObj);
     }
     
-    function RetrieveUsers(){
+    function RetrieveUsers($userRole){
         $userConnections = new UserConnections();
-        $userList = $userConnections->PullUsers();
+        $userList = $userConnections->PullUsers($userRole);
         
         return $userList;
     }

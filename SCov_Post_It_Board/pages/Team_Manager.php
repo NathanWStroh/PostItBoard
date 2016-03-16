@@ -38,7 +38,7 @@ if (isset($_POST['delete'])) {
         $partnerTeamController->DeleteTeam($teamID);
         echo '<p style="color:blue;"> Team has been deleted! </p>';
     } catch (Exception $ex) {
-        echo '<pstyle="color:red;">' . $ex->getMessage() . '</p>';
+        echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
     }
 }
 ?>

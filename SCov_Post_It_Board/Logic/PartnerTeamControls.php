@@ -36,5 +36,5 @@ class PartnerTeamControls {
 
         return $partnerList;
     }
-
+    
 }

@@ -15,14 +15,9 @@ if (isset($_SESSION['id'])) {
 
     if (isset($_POST['submit'])) {
 
-//    foreach ($_POST as $name => $val) {
-//        echo htmlspecialchars($name . ': ' . $val) . "\n";
-//    }
-        //if exists, do update instead of create
-
-        $postItObj->setTeam($_POST['team']);
-        $postItObj->setPartner($_POST['partner']);
-        $postItObj->setIssuedRep('nstroh'); //change to $_Session:username when $_Session is set.
+        $postItObj->setTeam($_POST['teamID']);
+        $postItObj->setPartner($_POST['partnerID']);
+        $postItObj->setIssuedRep($_SESSION['id']); //change to $_Session:username when $_Session is set.
         $postItObj->setIssues($_POST['issue']);
         $postItObj->setCurrentNews($_POST['news']);
         $postItObj->setAlertStatus($_POST['alert']);
@@ -62,28 +57,28 @@ if (isset($_SESSION['id'])) {
     <body>
         <h4>Please fill out as accurately as possible.</h4> 
         <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
-            Team: <select name='team'>
+            Team: <select name='teamID'>
                 <?php
-                $userList = $partnerTeamController->GetTeams();
+                $teamList = $partnerTeamController->GetTeams();
 
-                for ($row = 1; $row < count($userList); $row++) {
-                    if ($postItObj->getTeam() === $userList[$row]->getID()) {
-                        echo "<option selected='selected' value='" . $userList[$row]->getID() . "'>" . $userList[$row]->getID() . ': ' . $userList[$row]->getTeamName() . "</option>";
+                for ($row = 1; $row < count($teamList); $row++) {
+                    if ($postItObj->getTeam() === $teamList[$row]->getTeamName()) {
+                        echo "<option selected='selected' value='" . $teamList[$row]->getID() . "'>" . $teamList[$row]->getID() . ': ' . $teamList[$row]->getTeamName() . "</option>";
                     } else {
-                        echo "<option value='" . $userList[$row]->getID() . "'>" . $userList[$row]->getID() . ': ' . $userList[$row]->getTeamName() . "</option>";
+                        echo "<option value='" . $teamList[$row]->getID() . "'>" . $teamList[$row]->getID() . ': ' . $teamList[$row]->getTeamName() . "</option>";
                     }
                 }
                 ?>
             </select><br><br>
-            Partner: <select name='partner'>
+            Partner: <select name='partnerID'>
                 <?php
-                $userList = $partnerTeamController->RetrievePartners();
+                $partnerList = $partnerTeamController->RetrievePartners();
 
-                for ($row = 0; $row < count($userList); $row++) {
-                    if ($postItObj->getPartner() === $userList[$row]->getPartnerName()) {
-                        echo "<option selected='selected' value='" . $userList[$row]->getPartnerName() . "'>" . $userList[$row]->getPartnerName() . "</option>";
+                for ($row = 0; $row < count($partnerList); $row++) {
+                    if ($postItObj->getPartner() === $partnerList[$row]->getPartnerName()) {
+                        echo "<option selected='selected' value='" . $partnerList[$row]->getID() . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
                     } else {
-                        echo "<option value='" . $userList[$row]->getPartnerName() . "'>" . $userList[$row]->getPartnerName() . "</option>";
+                        echo "<option value='" . $partnerList[$row]->getID() . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
                     }
                 }
                 ?>
@@ -109,20 +104,20 @@ if (isset($_SESSION['id'])) {
             Post It Alert: 
             <select name='alert'> class="dropdown-menu" aria-labelledby="alertType">            
                 <option value="0"<?php
-            if ($postItObj->getAlertStatus() == 0) {
-                echo "selected='selected'";
-            }
-            ?>>Standard Alert</option>
+                if ($postItObj->getAlertStatus() == 0) {
+                    echo "selected='selected'";
+                }
+                ?>>Standard Alert</option>
                 <option value="1"<?php
-                        if ($postItObj->getAlertStatus() == 1) {
-                            echo "selected='selected'";
-                        }
-                        ?> style="background-color: yellow">Small Outage</option>
+                if ($postItObj->getAlertStatus() == 1) {
+                    echo "selected='selected'";
+                }
+                ?> style="background-color: yellow">Small Outage</option>
                 <option value="2"<?php
-            if ($postItObj->getAlertStatus() == 2) {
-                echo "selected='selected'";
-            }
-            ?> style="background-color: orange">Major Outage</option>
+                if ($postItObj->getAlertStatus() == 2) {
+                    echo "selected='selected'";
+                }
+                ?> style="background-color: orange">Major Outage</option>
             </select><br><br>
             <?php
             if ($postItObj->getPostItID() != '') {
@@ -133,8 +128,11 @@ if (isset($_SESSION['id'])) {
                 } else {
                     echo "<option value='1'>Closed</option>";
                 }
-
                 echo "</select><br><br>";
+
+                if ($postItObj->getEntryDate() != '') {
+                    echo "Ticket Opened: <br><input disabled type='text' id='entrydate'  name='entrydate' value=' ".$postItObj->getEntryDate() ."'/><br><br>";
+                }
             }
             ?>
             <input name='submit' type='submit' class='btn btn-primary'/>   

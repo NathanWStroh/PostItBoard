@@ -15,14 +15,19 @@ $PostItController = new Post_It();
         test
     </div>
     <div id="listOfPostIts" class='panel-body'>
-        <table id="tableOfPosts" class="table table-condensed" style='border-collapse:collapse' data-order='[[4,"DESC"]]'>
+        <table id="tableOfPosts" class="table table-condensed" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
             <thead>
                 <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
             </thead>
             <tbody>
                 <?php
-                $postItArray = $PostItController->GrabPostIts();
-
+                
+                if (isset($_SESSION['id'])) {
+                    $postItArray = $PostItController->GrabPostItsByUserId($_SESSION['id']);
+                }else{
+                    $postItArray = $PostItController->GrabPostIts();
+                }
+                
                 for ($row = 0; $row < count($postItArray); $row++) {
                     $status = intval($postItArray[$row]->getStatus());
                     $alert = intval($postItArray[$row]->getAlertStatus());

@@ -4,7 +4,7 @@ include_once'../resources/Resource_Headers.php';
 include_once 'Admin_Header.php';
 include_once '../Logic/PartnerTeamControls.php';
 
-if (isset($_SESSION['id'])&& $_SESSION['role']==2) {
+if (isset($_SESSION['id'])&& $_SESSION['role']==3) {
     ?>
     <body>
         <h3>Work in progress. For Sam's Eyes only.</h3>

@@ -3,13 +3,14 @@
 include_once 'DBConnection.php';
 include_once 'PartnerTeamConnections.php';
 include_once '../Models/User_Obj.php';
+include_once '../Models/UserSettings.php';
 
 class UserConnections {
 
-    function PullUsers() {
+    function PullUsers($userRole) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = "SELECT u.a_id,u.a_username, u.a_fname,u.a_lname,ur.user_rights FROM scov_post_it.users u, scov_post_it.user_rights ur WHERE u.a_id = ur.a_id and user_rights <> 2; ";
+        $query = "SELECT u.a_id,u.a_username, u.a_fname,u.a_lname,ur.user_rights FROM scov_post_it.users u, scov_post_it.user_rights ur WHERE u.a_id = ur.a_id and user_rights <=".$userRole. ";";
 
         $userList = array();
 
@@ -40,8 +41,8 @@ class UserConnections {
         $dbconnection = $connection->dbconnect();
         
         $LogInQuery = "select * from users where a_username ='" . $username . "' and a_password ='" . $userPassword . "';";
-        $VerifyUserQuery = "SELECT a_id from user_rights where a_id =";
-        $CreateUserQuery = 'INSERT INTO user_rights (a_id) Values (';
+        $VerifyUserQuery = "SELECT a_id from scov_post_it.user_rights where a_id =";
+        $CreateUserQuery = 'INSERT INTO scov_post_it.user_rights (a_id) Values (';
         $GetUserInformationQuery = "select u.a_id, u.a_username, u.a_lname,u.a_fname,ur.user_rights from scov_post_it.users u, scov_post_it.user_rights ur where u.a_id = ur.a_id and u.a_id =";
 
 
@@ -57,7 +58,7 @@ class UserConnections {
                     //creates new user if not in user_rights table
                     $userExists = $dbconnection->query($VerifyUserQuery);
                     if ($userExists->num_rows === 0) {
-
+                        echo 'entering loop';
                         $CreateUserQuery = $CreateUserQuery . $userID . ");";
                         $createPartnerSettingsQuery = 'INSERT INTO scov_post_it.rep_partner_settings (a_id,partner_id,visible) SELECT '.$userID.', id, 1 FROM scov_post_it.partners;' ;
 
@@ -105,40 +106,44 @@ class UserConnections {
         
     }
 
-    function UserSettings($userObj) {
-        $partnerConnection = new PartnerTeamConnections();
-        $partnerList = $partnerConnection->RetrievePartnerList();
-        $userSettingsList = array();
-
+    function SaveUserSettings($userSettingObj) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $createUserSettingsQuery = 'SELECT * FROM rep_partner_settings where userID =' . $userObj->getID();
-        $getUserSettingsQuery = 'select partnerID from rep_partner_settings where userID=' . $userObj->getID();
-
-        try {
-            $verifySettings = $dbconnection->query($getUserSettingsQuery);
-
-            if ($verifySettings->num_rows > 0) {
-                while ($row = $user->fetch_assoc()) {
-                    array_push($userSettingsList, $row['partnerID']);
-                }
-                $userObj->setPartnerSettings($userSettingsList);
-            }
-        } catch (Exception $ex) {
-            echo '<p style="color:red;">Error Retrieving User Settings: ' . $dbconnection->connect_error . '</p>';
-        }
-        $dbconnection->close();
-        return $userObj();
-    }
-
-    function SaveUserSettings($userID,$partnerID,$visible) {
-        $connection = new DBConnection();
-        $dbconnection = $connection->dbconnect();
-        $query = 'UPDATE scov_post_it.rep_partner_settings SET visible ='.$visible.' WHERE partner_id ='.$partnerID.' and a_id ='.$userID;
+        $query = 'UPDATE scov_post_it.rep_partner_settings SET visible ='.$userSettingObj->getVisible().' WHERE settings_id ='.$userSettingObj->getSettingID();
 
         try {
 
             $dbconnection->query($query);
+            $dbconnection->close();
+        } catch (Exception $ex) {
+            echo '<p style="color:red;"> Error occured saving user settings: ' . $dbconnection->connect_error . '<p>';
+            $dbconnection->close();
+        }
+    }
+    
+    function GetUserSettings($userID){
+        $connection = new DBConnection();
+        $dbconnection = $connection->dbconnect();
+        $userSettingList = array();
+        
+        $query = 'SELECT rps.settings_id, rps.a_id, p.queue_name, rps.visible '
+                . 'FROM scov_post_it.rep_partner_settings rps, scov_post_it.partners p '
+                . 'where rps.partner_id = p.id and a_id ='. $userID .';';
+
+        try {
+            $grabSettings = $dbconnection->query($query);
+            if ($grabSettings->num_rows > 0) {
+                while ($row = $grabSettings->fetch_assoc()) {
+                    $userSetting = new UserSettings();
+                    
+                    $userSetting->setSettingID($row['settings_id']);
+                    $userSetting->setPartnerName($row['queue_name']);
+                    $userSetting->setVisible($row['visible']);
+                    
+                    array_push($userSettingList, $userSetting);
+                }
+                return $userSettingList;
+            }
             $dbconnection->close();
         } catch (Exception $ex) {
             echo '<p style="color:red;"> Error occured saving user settings: ' . $dbconnection->connect_error . '<p>';

@@ -31,7 +31,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
             </thead>
             <tbody>
                 <?php
-                $partnerList = $userController->RetrieveUsers();
+                $partnerList = $userController->RetrieveUsers($_SESSION['role']);
 
                 for ($row = 0; $row < count($partnerList); $row++) {
                     if ($partnerList[$row]->getID() != $_SESSION['id']) {
@@ -46,13 +46,20 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
                         if ($partnerList[$row]->getRole() == 0) {
                             echo " selected=\'selected\'";
                         }
-                        echo ">Standard User</option>";
+                        echo ">Basic User</option>";
                         echo "<option value='1'";
                         if ($partnerList[$row]->getRole() == 1) {
                             echo " selected=\'selected\'";
                         }
-                        echo ">Administrator</option></td>";
-                        echo"</select>";
+                        echo ">Team Lead</option>";
+                        if ($_SESSION['role'] >= 2) {
+                            echo "<option value='2'";
+                            if ($partnerList[$row]->getRole() == 2) {
+                                echo " selected=\'selected\'";
+                            }
+                            echo ">Supervisor</option>";
+                        }
+                        echo"</td></select>";
                         echo "<td><input id='update" . $row . "' class='btn btn-default'   type='submit' name='update' value='update' "
                         . "onclick=\"return confirm('Updating user permissions for " . $partnerList[$row]->getFirstName() . " " . $partnerList[$row]->getLastName() . "?');\"></td>";
                         echo '</form></tr>';
@@ -61,11 +68,6 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
                 ?>
             </tbody>
         </table>
-        <script>
-            $('.userRole').on('change', function () {
-                $(this)
-            });
-        </script>
     </body>
     </html>
     <?php

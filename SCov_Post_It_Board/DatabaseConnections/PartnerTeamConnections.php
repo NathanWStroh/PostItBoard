@@ -41,7 +41,7 @@ class PartnerTeamConnections {
     function GrabTeams() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'Select * from Team;';
+        $query = 'Select * from scov_post_it.team;';
 
 
         $teamList = array();
@@ -70,7 +70,7 @@ class PartnerTeamConnections {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
         
-        $query = "INSERT INTO TEAM (TEAM) VALUES ('".$teamName."');";
+        $query = "INSERT INTO scov_post_it.team (team) VALUES ('".$teamName."');";
         
         try{
             $dbconnection->query($query);
