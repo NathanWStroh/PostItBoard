@@ -1,31 +1,31 @@
 <?php
-//start session
-//include_once '../Models/User_Obj.php';
-//include_once (dirname('__FILE__')) . '/Logic/UserControls.php';
-//
-//
-if (session_id() == '' || !isset($_SESSION)) {
-    session_start();
-}
-
-//    $userObj = new User_Obj();
-//    
-//
-//if($userObj === null){
-//    echo '<h1>no user atm...</h1>';
-//}
+session_start();
 ?>
+
 <header>
     <nav class="navbar navbar-default">
         <ul class="basicNav">
             <li> <a href="../pages/home.php">Home</a></li>
-            <li> <a href="../pages/Post_It_Manager.php" >Create Post It</a></li>
-            <li> <a href="../pages/UpdatePostIt.php">Update Post It</a></li>
-            <li> <a href="../pages/Personal_Settings.php" >Personal Settings</a></li>      
-            <li> <a href="../pages/User_Manager.php" >User Panel</a></li>      
-            <li> <a href="../pages/Team_Manager.php" >Team Panel</a></li>
-            <li> <a href="../pages/Reporting.php">Reporting</a></li>
-            <li style="float:right;"> <a href="../pages/LogIn.php" class="btn" >Log in</a></li>
+            <?php
+            if (isset($_SESSION['role'])) {
+                if ($_SESSION['role'] >= 0) {
+                    echo '<li> <a href="../pages/Post_It_Manager.php" >Create Post It</a></li>';
+                    echo '<li> <a href="../pages/UpdatePostIt.php">Update Post It</a></li>';
+                    echo '<li> <a href="../pages/Personal_Settings.php" >Personal Settings</a></li>';
+                }
+                if ($_SESSION['role'] >= 1) {
+                    echo '<li> <a href="../pages/User_Manager.php" >User Panel</a></li>';
+                    echo '<li> <a href="../pages/Team_Manager.php" >Team Panel</a></li>';
+                    echo '<li> <a href="../pages/Reporting.php">Reporting</a></li>';
+                }
+                if ($_SESSION['role'] == 2) {
+                    echo '<li> <a href="../pages/Admin_Partner_Controls.php">Partner Controls</a></li>';
+                }
+                echo '<li style="float:right;"><a href="../pages/LogOut.php" class="btn" >Log Out</a></li><li style="float:right;"><span class="welcome">Welcome, ' . $_SESSION['name'] . '.</span></li>';
+            } else {
+                echo '<li style="float:right;"><a href="../pages/LogIn.php"  >Log In</a></li>';
+            }
+            ?>
         </ul>
     </nav>
 </header>

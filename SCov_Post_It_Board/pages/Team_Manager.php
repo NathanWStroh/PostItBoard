@@ -7,7 +7,7 @@ include_once '../Logic/PartnerTeamControls.php';
 
 $partnerTeamController = new PartnerTeamControls();
 
-
+if (isset($_SESSION['id']) && $_SESSION['role'] >= 1 ) {
 if (isset($_POST['submit'])) {
 
     try {
@@ -53,17 +53,22 @@ if (isset($_POST['delete'])) {
         </thead>
         <tbody>
             <?php
-            $teamList = $partnerTeamController->GetTeams();
+            $userList = $partnerTeamController->GetTeams();
 
-            for ($row = 1; $row < count($teamList); $row++) {
+            for ($row = 1; $row < count($userList); $row++) {
                 echo "<tr><form name='form" . $row . " ' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
-                echo "<td hidden><input type= 'text' name='teamID' value='" . $teamList[$row]->getID() . "'/></td>";
-                echo "<td>" . $teamList[$row]->getID() . "</td><td><input type='text' name='teamName' value='" . $teamList[$row]->getTeamName() . "'/></td>";
+                echo "<td hidden><input type= 'text' name='teamID' value='" . $userList[$row]->getID() . "'/></td>";
+                echo "<td>" . $userList[$row]->getID() . "</td><td><input type='text' name='teamName' value='" . $userList[$row]->getTeamName() . "'/></td>";
                 echo "<td><input id='update' type='submit' name='update' value='update'></td>";
-                echo "<td><input id='delete' type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete ".$teamList[$row]->getTeamName()."?');\"></td>";
+                echo "<td><input id='delete' type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete ".$userList[$row]->getTeamName()."?');\"></td>";
                 echo '</form></tr>';
             }
             ?>
         </tbody>
     </table>
 </body>
+</html>
+<?php
+}else{
+    header('Location: Home.php');
+}

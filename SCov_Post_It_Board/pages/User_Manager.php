@@ -5,26 +5,70 @@ include_once 'Admin_Header.php';
 include_once '../Models/User_Obj.php';
 include_once '../Logic/UserControls.php';
 
-$userClass = new UserControls();
-?>
+if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
+    $userController = new UserControls();
 
-<body>
-    <h3></h3>
-    <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
-        <?php
-        
-        $userList = $userClass->RetrieveUsers();
+    if (isset($_POST['update'])) {
+        $userObj = new User_Obj();
 
-        for ($row = 0; $row < count($userList); $row++) {
-            echo "<input type='checkbox' name='users'";
-            if ($userList[$row]->getRole() != "STANDARD USER") {
-                echo "checked='true'";
-            }
-            echo "value='" . $userList[$row]->getId() . "'>"
-            . $userList[$row]->getFirstName() . ' ' . $userList[$row]->getLastName() . "<br>";
+        $userObj->setID($_POST['userID']);
+        $userObj->setRole($_POST['userRole']);
+
+        try {
+            $userController->UpdateUserPrivilege($userObj);
+            echo '<p style="color:blue;">User has been updated. </p>';
+        } catch (Exception $ex) {
+            echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
         }
-        ?>
-        <button style='float:right;' type='submit' class='btn btn-primary'>Submit</button>
-    </form>
-</body>
-</html>
+    }
+    ?>
+
+    <body>
+        <h3></h3>
+        <table id="tableOfPosts" class="table table-condensed">
+            <thead>
+                <tr><td hidden></td><td>Username</td><td>First Name</td><td>Last Name</td><td>Role</td><td>Update</td></tr>
+            </thead>
+            <tbody>
+                <?php
+                $partnerList = $userController->RetrieveUsers();
+
+                for ($row = 0; $row < count($partnerList); $row++) {
+                    if ($partnerList[$row]->getID() != $_SESSION['id']) {
+
+                        echo "<tr><form name='form" . $row . " ' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
+                        echo "<td hidden><input type= 'text' name='userID' value='" . $partnerList[$row]->getID() . "'/></td>";
+                        echo "<td>" . $partnerList[$row]->getUsername() . "</td>";
+                        echo "<td>" . $partnerList[$row]->getFirstName() . "</td>";
+                        echo "<td>" . $partnerList[$row]->getLastName() . "</td>";
+                        echo "<td><select name='userRole'>";
+                        echo "<option value='0'";
+                        if ($partnerList[$row]->getRole() == 0) {
+                            echo " selected=\'selected\'";
+                        }
+                        echo ">Standard User</option>";
+                        echo "<option value='1'";
+                        if ($partnerList[$row]->getRole() == 1) {
+                            echo " selected=\'selected\'";
+                        }
+                        echo ">Administrator</option></td>";
+                        echo"</select>";
+                        echo "<td><input id='update" . $row . "' class='btn btn-default'   type='submit' name='update' value='update' "
+                        . "onclick=\"return confirm('Updating user permissions for " . $partnerList[$row]->getFirstName() . " " . $partnerList[$row]->getLastName() . "?');\"></td>";
+                        echo '</form></tr>';
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+        <script>
+            $('.userRole').on('change', function () {
+                $(this)
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+} else {
+    header('Location: Home.php');
+}

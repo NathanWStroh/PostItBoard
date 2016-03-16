@@ -4,6 +4,8 @@ include_once 'Admin_Header.php';
 include_once '../resources/Resource_Headers.php';
 include_once '../Logic/Post_It.php';
 
+if (isset($_SESSION['id'])) {
+
 $PostItController = new Post_It();
 
 if (isset($_POST['delete'])) {
@@ -76,3 +78,7 @@ if (isset($_POST['delete'])) {
         </table>
     </div>
 </html>
+<?php
+}else{
+    header('Location: Home.php');
+}

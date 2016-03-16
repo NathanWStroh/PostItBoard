@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    
     $('#tableOfPosts').DataTable();
     $('#tableOfPosts').colResizable({
         liveDrag: true,
@@ -19,4 +20,7 @@ $(document).ready(function () {
         // there is no delay when the mouse is moved away from the trigger
         delay: 0
     });
+    
+    
+    
 });

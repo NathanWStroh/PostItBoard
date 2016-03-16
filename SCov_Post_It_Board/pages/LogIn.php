@@ -8,14 +8,24 @@ include_once '../Logic/UserControls.php';
 $userController = new UserControls();
 
 if (isset($_POST['submit'])) {
-    
-    try{
-    $userObj = $userController->GetUserInformation($_POST['username'], $_POST['password']);
+
+    try {
+        if ($userController->GetUserInformation($_POST['username'], $_POST['password']) == true) {
+            $userObj = $userController->GetUserInformation($_POST['username'], $_POST['password']);
+            
+            $_SESSION['id'] = $userObj->getID();
+            $_SESSION['name'] = $userObj->getFirstName();
+            $_SESSION['role'] = $userObj->getRole();
+
+            
+            header('Location: home.php');
+        }
+
+            
     } catch (Exception $ex) {
-        echo '<p style="color:red;">'.$ex->getMessage().'</p>';
+        echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
     }
 }
-
 ?>
 
 <body>

@@ -5,10 +5,6 @@ include_once '../resources/Resource_Headers.php';
 include_once '../Logic/Post_It.php';
 
 $PostItController = new Post_It();
-
-if ($_SESSION) {
-    
-}
 ?>
 <head>
     <script src="resources/js/TableFunctionality.js" type="text/javascript"></script>

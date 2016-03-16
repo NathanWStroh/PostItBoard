@@ -9,9 +9,15 @@ include_once '../Models/SCov_PostIt_Obj.php';
 include_once '../Models/Team_Obj.php';
 include_once '../Models/User_Obj.php';
 include_once 'Admin_Header.php';
-?>
-<body>
-    <H3>Allow for very limited display reporting and exporting of raw data</H3>
-    <p>Not sure what 'raw data' that is being mentioned, but will figure it out.</p>
-</body>
-</html>
+
+if (isset($_SESSION['id']) && $_SESSION['role'] >= 1 ) {
+    ?>
+    <body>
+        <H3>Allow for very limited display reporting and exporting of raw data</H3>
+        <p>Not sure what 'raw data' that is being mentioned, but will figure it out.</p>
+    </body>
+    </html>
+    <?php
+}else{
+    header('Location: Home.php');
+}

@@ -10,7 +10,7 @@ class PartnerTeamConnections {
     function RetrievePartnerList() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'CALL RETRIEVE_PARTNERS();';
+        $query = 'SELECT * FROM scov_post_it.partners;';
 
         $partnerList = array();
         try {
@@ -23,6 +23,9 @@ class PartnerTeamConnections {
 
                     $partnerObj->setID($row["id"]);
                     $partnerObj->setPartnerName($row["queue_name"]);
+                    $partnerObj->setPartnerNumber($row["queue_number"]);
+                    $partnerObj->setScrUserID($row["scr_user_id"]);
+                    $partnerObj->setScrGroupName($row["scr_group_name"]);
 
                     $partnerList[] = $partnerObj;
                 }

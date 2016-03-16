@@ -25,7 +25,7 @@ class Post_It {
         $postItConnection->CreatePostIt($postItObj);
     }
     
-    function GetTargetTicket($postItID){
+    function GetTargetPostIt($postItID){
         $postItConnection = new PostItConnections();
         $postItObj = new PostIts();
         
