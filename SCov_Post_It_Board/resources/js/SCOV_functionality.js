@@ -6,6 +6,10 @@ $(document).ready(function () {
             {"width": "150px", "targets": 7},
         ]
     });
+
+    $('.team').DataTable({
+    });
+
     $('.updatePageTable').DataTable({
         "columnDefs": [
             {"width": "150px", "targets": 3},
@@ -13,6 +17,9 @@ $(document).ready(function () {
             {"width": "60px", "targets": 8},
             {"width": "60px", "targets": 9}
         ]
+    });
+
+    $('.userSettings').DataTable({
     });
 
     $('#tableOfPosts').colResizable({

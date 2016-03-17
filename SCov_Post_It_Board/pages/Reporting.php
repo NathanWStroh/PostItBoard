@@ -10,11 +10,12 @@ include_once '../Models/Team_Obj.php';
 include_once '../Models/User_Obj.php';
 include_once 'Admin_Header.php';
 
-$postItController = new Post_It();
-$postItArray = $postItController->GrabPostIts();
-if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
-    if (isset($_POST['filter'])) {
 
+
+if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
+    $postItController = new Post_It();
+    $postItArray = $postItController->GrabPostIts();
+    if (isset($_POST['filter'])) {
         try {
             $fromDate = $_POST['from'];
             $toDate = $_POST['to'];
@@ -23,26 +24,32 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
             $postItArray = $postItController->GrabPostIts();
         }
     }
+    
     if (isset($_POST['export'])) {
         $output_file_name = 'PostIt_Report.csv';
         $delimiter = ',';
-        
-        $postItController->ConvertToCSV($postItArray, $output_file_name, $delimiter);
+
+        $postItController->ConvertToCSV($_SESSION['displayedPostItArray'], $output_file_name, $delimiter);
     }
     ?>
     <body>
         <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
             <label for="from">from</label>
-            <input type="text" id="from" name="from" value="<?php if (isset($_POST['filter'])) {
-        echo $_POST['from'];
-    } ?>"/>
+            <input type="text" id="from" name="from" value="<?php
+            if (isset($_POST['filter'])) {
+                echo $_POST['from'];
+            }
+            ?>"/>
             <label for="to">to</label>
-            <input type="text" id="to" name ="to" value="<?php if (isset($_POST['filter'])) {
-        echo $_POST['to'];
-    } ?>"/>
-
-            <input type="submit" name="filter" value="Filter" id="filter" class='btn btn-primary'/>        
+            <input type="text" id="to" name ="to" value="<?php
+            if (isset($_POST['filter'])) {
+                echo $_POST['to'];
+            }
+            ?>"/>
+            <input type="submit" name="filter" value="Filter" id="filter" class='btn btn-primary'/> 
+            <a href='Reporting.php'><button class='btn btn-primary' type='button'>Reset</button></a>       
         </form>
+        
 
         <div id="listOfPostIts" class='panel-body'>
             <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
@@ -53,6 +60,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
                     </thead>
                     <tbody>
                         <?php
+                        $displayedPostItArray = Array();
                         for ($row = 0; $row < count($postItArray); $row++) {
                             $status = intval($postItArray[$row]->getStatus());
                             $alert = intval($postItArray[$row]->getAlertStatus());
@@ -87,8 +95,11 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
                                     break;
                             }
                             echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
+                            
                             echo "</tr>";
+                            array_push($displayedPostItArray,$postItArray[$row]);
                         }
+                        $_SESSION['displayedPostItArray'] = $displayedPostItArray;
                         ?>
                     </tbody>
                 </table>
@@ -97,7 +108,6 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
     </body>
     </html>
     <?php
-
 } else {
     header('Location: Home.php');
 }

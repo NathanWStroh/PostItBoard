@@ -28,6 +28,11 @@ class UserControls {
         $userConnection->UpdateUserPrivilege($userObj);
     }
     
+    function DeleteUser($userID){
+        $userConnection = new UserConnections();
+        $userConnection->DeleteUser($userID);
+    }
+    
     function RetrieveUsers($userRole){
         $userConnections = new UserConnections();
         $userList = $userConnections->PullUsers($userRole);

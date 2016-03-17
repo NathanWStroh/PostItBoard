@@ -4,30 +4,84 @@ include_once'../resources/Resource_Headers.php';
 include_once 'Admin_Header.php';
 include_once '../Logic/PartnerTeamControls.php';
 
-if (isset($_SESSION['id'])&& $_SESSION['role']==3) {
+if (isset($_SESSION['id']) && $_SESSION['role'] == 3) {
+
+    $partnerTeamController = new PartnerTeamControls();
+    if (isset($_POST['submit'])) {
+
+        try {
+            $partnerObj = new Partner_Obj();
+            
+            $partnerObj->setPartnerName($_POST['queueName']);
+            $partnerObj->setPartnerNumber($_POST['queueNumber']);
+            $partnerObj->setScrUserID($_POST['scrUserID']);
+            $partnerObj->setScrGroupName($_POST['scrGroupName']);
+            
+            $partnerTeamController->CreatePartner($partnerObj);
+            echo '<p style="color:blue;"> Team has been added. </p>';
+        } catch (Exception $ex) {
+            echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
+        }
+    }
+    if (isset($_POST['update'])) {
+
+        try {
+            $partnerObj = new Partner_Obj();
+            $partnerObj->setID($_POST['partnerID']);
+            $partnerObj->setPartnerName($_POST['queueName']);
+            $partnerObj->setPartnerNumber($_POST['queueNumber']);
+            $partnerObj->setScrUserID($_POST['scrUserID']);
+            $partnerObj->setScrGroupName($_POST['scrGroupName']);
+
+            $partnerTeamController->UpdatePartner($partnerObj);
+            echo '<p style="color:blue;"> Team has been UPDATED! </p>';
+        } catch (Exception $ex) {
+            echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
+        }
+    }
+
+    if (isset($_POST['delete'])) {
+
+        try {
+            $partnerID = $_POST['partnerID'];
+
+            $partnerTeamController->DeletePartner($partnerID);
+            echo '<p style="color:blue;"> Team has been deleted! </p>';
+        } catch (Exception $ex) {
+            echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
+        }
+    }
     ?>
     <body>
-        <h3>Work in progress. For Sam's Eyes only.</h3>
-
-        <table id="tableOfPosts" class="table table-condensed" style='border-collapse:collapse' data-order='[[1,"asc"]]'>
+        <h4>Enter new ISP Partner:</h4>
+        <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
+            Queue Name: <input type="text" name='queueName' />
+            Queue Number: <input type="text" name='queueNumber' />
+            SCR User ID: <input type="text" name='scrUserID' />
+            SCR Group Name: <input type="text" name='scrGroupName' />
+            <input name='submit' type='submit' class='btn btn-primary'/>
+        </form><br><br>
+        <table id="tableOfPosts" class="table table-condensed team" style='border-collapse:collapse' data-order='[[1,"asc"]]'>
             <thead>
                 <tr>
-                    <th>ID</th><th>Queue Name</th><th>Queue Number</th><th>SCR User ID</th><th>SCR Group Name</th>
+                    <th hidden>ID</th><th>Queue Name</th><th>Queue Number</th><th>SCR User ID</th><th>SCR Group Name</th><th>Update</th><th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $partners = new PartnerTeamControls();
-                $partnerList = $partners->RetrievePartners();
+                $userList = $partners->RetrievePartners();
 
-                for ($row = 0; $row < count($partnerList); $row++) {
-                    echo "<tr>";
-                    echo "<td>" . $partnerList[$row]->getID() . "</td>";
-                    echo "<td>" . $partnerList[$row]->getPartnerName() . "</td>";
-                    echo "<td>" . $partnerList[$row]->getPartnerNumber() . "</td>";
-                    echo "<td>" . $partnerList[$row]->getScrUserID() . "</td>";
-                    echo "<td>" . $partnerList[$row]->getScrGroupName() . "</td>";
-                    echo "</tr>";
+                for ($row = 0; $row < count($userList); $row++) {
+                    echo "<tr><form name='form" . $row . " ' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
+                    echo "<td hidden><input type='text' name='partnerID' value='" . $userList[$row]->getID() . "'/></td>";
+                    echo "<td><input type='text' name='queueName' value='" . $userList[$row]->getPartnerName() . "'/></td>";
+                    echo "<td><input type='text' name='queueNumber' value='" . $userList[$row]->getPartnerNumber() . "'/></td>";
+                    echo "<td><input type='text' name='scrUserID' value='" . $userList[$row]->getScrUserID() . "'/></td>";
+                    echo "<td><input type='text' name='scrGroupName' value='" . $userList[$row]->getScrGroupName() . "'/></td>";
+                    echo "<td><input class='btn btn-primary' id='update' type='submit' name='update' value='update'></td>";
+                    echo "<td><input class='btn btn-primary' id='delete' type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete " . $userList[$row]->getPartnerName() . "?');\"></td>";
+                    echo '</form></tr>';
                 }
                 ?>
             </tbody>

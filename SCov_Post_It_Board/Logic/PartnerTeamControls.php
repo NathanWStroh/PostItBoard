@@ -8,26 +8,25 @@ class PartnerTeamControls {
 
     function GetTeams() {
         $connection = new PartnerTeamConnections();
-        
+
         $teamList = $connection->GrabTeams();
-        
+
         return $teamList;
     }
 
     function CreateTeam($teamName) {
         $connection = new PartnerTeamConnections();
         $connection->CreateTeam($teamName);
-             
     }
-    function UpdateTeam($teamID,$teamName){
+
+    function UpdateTeam($teamID, $teamName) {
         $connection = new PartnerTeamConnections();
         $connection->UpdateTeam($teamID, $teamName);
     }
-    
-    function DeleteTeam($teamID){
+
+    function DeleteTeam($teamID) {
         $connection = new PartnerTeamConnections();
         $connection->DeleteTeam($teamID);
-        
     }
 
     function RetrievePartners() {
@@ -36,5 +35,19 @@ class PartnerTeamControls {
 
         return $partnerList;
     }
-    
+    function CreatePartner($partnerObj){
+        $userConnection = new PartnerTeamConnections();
+        $userConnection->CreatePartner($partnerObj);
+    }
+
+    function UpdatePartner($partnerObj) {
+        $userConnection = new PartnerTeamConnections();
+        $userConnection->UpdatePartner($partnerObj);
+    }
+
+    function DeletePartner($partnerID) {
+        $userConnection = new PartnerTeamConnections();
+        $userConnection->DeletePartner($partnerID);
+    }
+
 }

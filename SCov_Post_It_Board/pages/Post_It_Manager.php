@@ -38,7 +38,7 @@ if (isset($_SESSION['id'])) {
 
             try {
                 $postIts->CreatePostIts($postItObj);
-                echo '<p style="color:blue;">Ticket has been added.</p>';
+                echo '<p style="color:blue;">Post It has been added.</p>';
             } catch (Exception $ex) {
                 echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
             }
@@ -49,7 +49,7 @@ if (isset($_SESSION['id'])) {
         try {
             $postItObj = $postIts->GetTargetPostIt($_GET['id']);
         } catch (Exception $ex) {
-            echo '<p style="color:red;">Failed loading post it: ' . $ex->getMessage() . '</p>';
+            echo '<p style="color:red;">Failed loading Post It: ' . $ex->getMessage() . '</p>';
         }
     }
     ?>
@@ -72,13 +72,13 @@ if (isset($_SESSION['id'])) {
             </select><br><br>
             Partner: <select name='partnerID'>
                 <?php
-                $partnerList = $partnerTeamController->RetrievePartners();
+                $userList = $partnerTeamController->RetrievePartners();
 
-                for ($row = 0; $row < count($partnerList); $row++) {
-                    if ($postItObj->getPartner() === $partnerList[$row]->getPartnerName()) {
-                        echo "<option selected='selected' value='" . $partnerList[$row]->getID() . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
+                for ($row = 0; $row < count($userList); $row++) {
+                    if ($postItObj->getPartner() === $userList[$row]->getPartnerName()) {
+                        echo "<option selected='selected' value='" . $userList[$row]->getID() . "'>" . $userList[$row]->getPartnerName() . "</option>";
                     } else {
-                        echo "<option value='" . $partnerList[$row]->getID() . "'>" . $partnerList[$row]->getPartnerName() . "</option>";
+                        echo "<option value='" . $userList[$row]->getID() . "'>" . $userList[$row]->getPartnerName() . "</option>";
                     }
                 }
                 ?>

@@ -73,9 +73,9 @@ if (isset($_SESSION['id'])) {
                                 break;
                         }
                         echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
-                        echo "<td><a href='Post_It_Manager.php?id=" . $postItArray[$row]->getPostItID() . "'><button type='button'>Edit</button></a></td>";
+                        echo "<td><a href='Post_It_Manager.php?id=" . $postItArray[$row]->getPostItID() . "'><button class='btn btn-primary' type='button'>Edit</button></a></td>";
                         if ($_SESSION['role'] >= 1) {
-                            echo "<td><input id='delete' type='submit' name='delete' value='Delete' onclick=\"return confirm('Are you sure you want to delete?');\"></td>";
+                            echo "<td><input id='delete' class='btn btn-primary' type='submit' name='delete' value='Delete' onclick=\"return confirm('Are you sure you want to delete?');\"></td>";
                         }
                         echo "</form></tr>";
                     }

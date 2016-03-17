@@ -38,9 +38,10 @@ if (isset($_SESSION['id'])) {
     ?>
     <body>
         <h3>Select the partners you would like to see on the post it board.</h3>
-        <table id="tableOfPosts" class="table table-condensed">
+        <div id="tableOfPosts">
+        <table id="tableOfPosts" class="table table-condensed userSettings">
             <thead>
-                <tr><td hidden></td><td>Partner Name</td><td>Show/Hide</td></tr>
+                <tr><td hidden></td><td>Partner Name</td><td>Visible/Hidden</td></tr>
             </thead>
             <tbody>
                 <?php
@@ -53,15 +54,16 @@ if (isset($_SESSION['id'])) {
                     echo "<td>" . $settingsList[$row]->getPartnerName() . "</td>";
 
                     if ($settingsList[$row]->getVisible() == 0) {
-                        echo "<td><input style='background-color: #4dff4d;' id='show' type='submit' name='show' value='show'></td>";
+                        echo "<td><input class='btn btn-secondary' id='show' type='submit' name='show' value='Hidden'></td>";
                     } else {
-                        echo "<td><input style='background-color: #ff6666;' id='hide' type='submit' name='hide' value='hide'></td>";
+                        echo "<td><input class='btn btn-primary' id='hide' type='submit' name='hide' value='Visible'></td>";
                     }
                     echo '</form></tr>';
                 }
                 ?>
             </tbody>
         </table>
+        </div>
     </body>
     </html>
     <?php

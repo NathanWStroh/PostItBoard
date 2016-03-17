@@ -25,9 +25,13 @@ class PostItConnections {
                     $postItObj->setTeam($rows["team"]);
                     $postItObj->setPartner($rows["queue_name"]);
                     $postItObj->setIssuedRep($rows["a_username"]);
-                    $postItObj->setEntryDate($rows["entry_date"]);
+                    $postItObj->setEntryDate(date('m/d/y g:i a', strtotime($rows["entry_date"])));
                     $postItObj->setIssues($rows["issue"]);
-                    $postItObj->setCloseDate($rows["close_date"]);
+                    if ($rows["close_date"] == '' || is_null($rows["close_date"])) {
+                        $postItObj->setCloseDate($rows["close_date"]);
+                    } else {
+                        $postItObj->setCloseDate(date('m/d/y g:i a', strtotime($rows["close_date"])));
+                    }
                     $postItObj->setStatus($rows["state"]);
                     $postItObj->setAlertStatus($rows["alert_status"]);
                     $postItObj->setCurrentNews($rows["news"]);
@@ -66,9 +70,13 @@ class PostItConnections {
                     $postItObj->setTeam($rows["team"]);
                     $postItObj->setPartner($rows["queue_name"]);
                     $postItObj->setIssuedRep($rows["a_username"]);
-                    $postItObj->setEntryDate($rows["entry_date"]);
+                    $postItObj->setEntryDate(date('m/d/y g:i a', strtotime($rows["entry_date"])));
                     $postItObj->setIssues($rows["issue"]);
-                    $postItObj->setCloseDate($rows["close_date"]);
+                    if ($rows["close_date"] == '' || is_null($rows["close_date"])) {
+                        $postItObj->setCloseDate($rows["close_date"]);
+                    } else {
+                        $postItObj->setCloseDate(date('m/d/y g:i a', strtotime($rows["close_date"])));
+                    }
                     $postItObj->setStatus($rows["state"]);
                     $postItObj->setAlertStatus($rows["alert_status"]);
                     $postItObj->setCurrentNews($rows["news"]);
@@ -86,12 +94,12 @@ class PostItConnections {
     }
 
     function GetPostItsWithFilter($fromDate, $toDate) {
-        
+
         $query = 'SELECT pi.post_it_id, t.team, p.queue_name,pi.issue,pi.news,u.a_username,pi.state,pi.alert_status,pi.entry_date,pi.close_date '
                 . 'FROM scov_post_it.post_its pi, scov_post_it.partners p, scov_post_it.team t, scov_post_it.users u  '
                 . 'WHERE pi.team_id = t.team_id and pi.partner_id = p.id and pi.user_id = u.a_id '
-                . 'AND CAST(pi.entry_date AS DATE) >="'.$fromDate.'" AND CAST(pi.entry_date AS DATE) <="'.$toDate.'";';
-        
+                . 'AND CAST(pi.entry_date AS DATE) >="' . $fromDate . '" AND CAST(pi.entry_date AS DATE) <="' . $toDate . '";';
+
         $postItsList = array();
 
         $connection = new DBConnection();
@@ -108,9 +116,13 @@ class PostItConnections {
                     $postItObj->setTeam($rows["team"]);
                     $postItObj->setPartner($rows["queue_name"]);
                     $postItObj->setIssuedRep($rows["a_username"]);
-                    $postItObj->setEntryDate($rows["entry_date"]);
+                    $postItObj->setEntryDate(date('m/d/y g:i a', strtotime($rows["entry_date"])));
                     $postItObj->setIssues($rows["issue"]);
-                    $postItObj->setCloseDate($rows["close_date"]);
+                    if ($rows["close_date"] == '' || is_null($rows["close_date"])) {
+                        $postItObj->setCloseDate($rows["close_date"]);
+                    } else {
+                        $postItObj->setCloseDate(date('m/d/y g:i a', strtotime($rows["close_date"])));
+                    }
                     $postItObj->setStatus($rows["state"]);
                     $postItObj->setAlertStatus($rows["alert_status"]);
                     $postItObj->setCurrentNews($rows["news"]);
@@ -137,15 +149,21 @@ class PostItConnections {
             $postIt = $dbconnection->query($query);
 
             if ($postIt->num_rows === 1) {
-                while ($rows = $postIt->fetch_assoc()) {
+                  while ($rows = $postIt->fetch_assoc()) {
+
+                    $postItObj = new PostIts();
 
                     $postItObj->setPostItID($rows["post_it_id"]);
                     $postItObj->setTeam($rows["team"]);
                     $postItObj->setPartner($rows["queue_name"]);
                     $postItObj->setIssuedRep($rows["a_username"]);
-                    $postItObj->setEntryDate($rows["entry_date"]);
+                    $postItObj->setEntryDate(date('m/d/y g:i a', strtotime($rows["entry_date"])));
                     $postItObj->setIssues($rows["issue"]);
-                    $postItObj->setCloseDate($rows["close_date"]);
+                    if ($rows["close_date"] == '' || is_null($rows["close_date"])) {
+                        $postItObj->setCloseDate($rows["close_date"]);
+                    } else {
+                        $postItObj->setCloseDate(date('m/d/y g:i a', strtotime($rows["close_date"])));
+                    }
                     $postItObj->setStatus($rows["state"]);
                     $postItObj->setAlertStatus($rows["alert_status"]);
                     $postItObj->setCurrentNews($rows["news"]);

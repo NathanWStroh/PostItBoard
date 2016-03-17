@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
         $teamName = $_POST['teamName'];
 
         $partnerTeamController->UpdateTeam($teamID, $teamName);
-        echo '<p style="color:blue;"> Team has been UPDATED! </p>';
+        echo '<p style="color:blue;"> Team has been updated! </p>';
     } catch (Exception $ex) {
         echo '<p style="color:red;">' . $ex->getMessage() . '</p>';
     }
@@ -47,9 +47,9 @@ if (isset($_POST['delete'])) {
         team name: <input type="text" name='team' />
         <input name='submit' type='submit' class='btn btn-primary'/>
     </form><br><br>
-    <table id="tableOfPosts" class="table table-condensed">
+    <table id="tableOfPosts" class="table table-condensed team">
         <thead>
-            <tr><td hidden></td><td>Team ID</td><td>Team Name</td><td></td><td></td></tr>
+            <tr><td hidden></td><td>Team ID</td><td>Team Name</td><td>Update</td><td>Delete</td></tr>
         </thead>
         <tbody>
             <?php
@@ -59,8 +59,8 @@ if (isset($_POST['delete'])) {
                 echo "<tr><form name='form" . $row . " ' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
                 echo "<td hidden><input type= 'text' name='teamID' value='" . $userList[$row]->getID() . "'/></td>";
                 echo "<td>" . $userList[$row]->getID() . "</td><td><input type='text' name='teamName' value='" . $userList[$row]->getTeamName() . "'/></td>";
-                echo "<td><input id='update' type='submit' name='update' value='update'></td>";
-                echo "<td><input id='delete' type='submit' name='delete' value='delete' onclick=\"return confirm('Are you sure you want to delete ".$userList[$row]->getTeamName()."?');\"></td>";
+                echo "<td><input class='btn btn-primary' id='update' type='submit' name='update' value='Update'></td>";
+                echo "<td><input class='btn btn-primary' id='delete' type='submit' name='delete' value='Delete' onclick=\"return confirm('Are you sure you want to delete ".$userList[$row]->getTeamName()."?');\"></td>";
                 echo '</form></tr>';
             }
             ?>
