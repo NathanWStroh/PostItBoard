@@ -48,7 +48,7 @@ class PostItConnections {
         $query = 'SELECT pi.post_it_id, t.team, p.queue_name,pi.issue,pi.news,u.a_username,pi.state,pi.alert_status,pi.entry_date,pi.close_date '
                 . 'FROM scov_post_it.post_its pi, scov_post_it.partners p, scov_post_it.team t, scov_post_it.users u  '
                 . 'WHERE pi.team_id = t.team_id and pi.partner_id = p.id and pi.user_id = u.a_id '
-                . 'AND p.id NOT IN ( SELECT partner_id from scov_post_it.rep_partner_settings where visible = 0 and a_id ='.$userID.');';
+                . 'AND p.id NOT IN ( SELECT partner_id from scov_post_it.rep_partner_settings where visible = 0 and a_id =' . $userID . ');';
 
         $postItsList = array();
 
@@ -85,12 +85,52 @@ class PostItConnections {
         }
     }
 
+    function GetPostItsWithFilter($fromDate, $toDate) {
+        
+        $query = 'SELECT pi.post_it_id, t.team, p.queue_name,pi.issue,pi.news,u.a_username,pi.state,pi.alert_status,pi.entry_date,pi.close_date '
+                . 'FROM scov_post_it.post_its pi, scov_post_it.partners p, scov_post_it.team t, scov_post_it.users u  '
+                . 'WHERE pi.team_id = t.team_id and pi.partner_id = p.id and pi.user_id = u.a_id '
+                . 'AND CAST(pi.entry_date AS DATE) >="'.$fromDate.'" AND CAST(pi.entry_date AS DATE) <="'.$toDate.'";';
+        
+        $postItsList = array();
+
+        $connection = new DBConnection();
+
+        $dbconnection = $connection->dbconnect();
+        try {
+            $postIts = $dbconnection->query($query);
+            if ($postIts->num_rows > 0) {
+                while ($rows = $postIts->fetch_assoc()) {
+
+                    $postItObj = new PostIts();
+
+                    $postItObj->setPostItID($rows["post_it_id"]);
+                    $postItObj->setTeam($rows["team"]);
+                    $postItObj->setPartner($rows["queue_name"]);
+                    $postItObj->setIssuedRep($rows["a_username"]);
+                    $postItObj->setEntryDate($rows["entry_date"]);
+                    $postItObj->setIssues($rows["issue"]);
+                    $postItObj->setCloseDate($rows["close_date"]);
+                    $postItObj->setStatus($rows["state"]);
+                    $postItObj->setAlertStatus($rows["alert_status"]);
+                    $postItObj->setCurrentNews($rows["news"]);
+
+                    array_push($postItsList, $postItObj);
+                }
+                $dbconnection->close();
+                return $postItsList;
+            }
+        } catch (Exception $ex) {
+            echo '<p style="color:red;"> Error has occured with Query:' . $ex->getMessage() . '</p>';
+        }
+    }
+
     function GetTicket($postItId) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
         $query = 'SELECT pi.post_it_id, t.team, p.queue_name,pi.issue,pi.news,u.a_username,pi.state,pi.alert_status,pi.entry_date,pi.close_date '
                 . 'FROM scov_post_it.post_its pi, scov_post_it.partners p, scov_post_it.team t, scov_post_it.users u  '
-                . 'WHERE pi.team_id = t.team_id and pi.partner_id = p.id and pi.user_id = u.a_id and pi.post_it_id ='.$postItId.';';
+                . 'WHERE pi.team_id = t.team_id and pi.partner_id = p.id and pi.user_id = u.a_id and pi.post_it_id =' . $postItId . ';';
         $postItObj = new PostIts();
 
         try {
@@ -126,7 +166,7 @@ class PostItConnections {
                 . "partner_id=" . $postItObj->getPartner() . ", "
                 . "issue= '" . $postItObj->getIssues() . "', "
                 . "news= '" . $postItObj->getCurrentNews() . "' ";
-        
+
 
         $connection = new DBConnection();
 
@@ -135,7 +175,7 @@ class PostItConnections {
         try {
             if ($postItObj->getStatus() == 0) {
                 $query = $query . ", state = 0, alert_status= '" . $postItObj->getAlertStatus() . "', close_date = '' ";
-            }else if ($postItObj->getStatus() == 1){
+            } else if ($postItObj->getStatus() == 1) {
                 $query = $query . ", state= 1, alert_status = 0, close_date = now() ";
             }
             $query = $query . "where post_it_ID =" . $postItObj->getPostItID() . ";";

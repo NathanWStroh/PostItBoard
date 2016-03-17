@@ -12,10 +12,10 @@ $PostItController = new Post_It();
 
 <body>
     <div id='tooltip' class='tooltip'>
-        test
+        
     </div>
     <div id="listOfPostIts" class='panel-body'>
-        <table id="tableOfPosts" class="table table-condensed" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
+        <table id="tableOfPosts" class="table table-condensed home" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
             <thead>
                 <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
             </thead>
@@ -33,16 +33,16 @@ $PostItController = new Post_It();
                     $alert = intval($postItArray[$row]->getAlertStatus());
                     switch ($alert) {
                         case 0:
-                            echo "<tr><td>standard</td>";
+                            echo "<tr data-toggle='tooltip' data-placement='tooltip' title='".$postItArray[$row]->getCurrentNews()."'><td>standard</td>";
                             break;
                         case 1:
-                            echo "<tr style='background-color:yellow;'><td>small</td>";
+                            echo "<tr  data-toggle='tooltip' data-placement='tooltip' title='".$postItArray[$row]->getCurrentNews()."' style='background-color:yellow;'><td>small</td>";
                             break;
                         case 2:
-                            echo "<tr  style='background-color:orange;'><td>major</td> ";
+                            echo "<tr  data-toggle='tooltip' data-placement='tooltip' title='".$postItArray[$row]->getCurrentNews()."'  style='background-color:orange;'><td>major</td> ";
                             break;
                         default :
-                            echo "<tr><td>standard</td>";
+                            echo "<tr  data-toggle='tooltip' data-placement='tooltip' title='".$postItArray[$row]->getCurrentNews()."'><td>standard</td>";
                             break;
                     }
                     echo '<td>' . $postItArray[$row]->getTeam() . '</td>';

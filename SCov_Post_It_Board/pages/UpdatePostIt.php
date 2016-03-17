@@ -25,7 +25,7 @@ if (isset($_SESSION['id'])) {
 
     <body>
         <div id="listOfPostIts">
-            <table id="tableOfPosts" class="table table-condensed" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
+            <table id="tableOfPosts" class="table table-condensed updatePageTable" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
                 <thead>
                     <tr><th hidden></th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Edit</th>
                         <?php if ($_SESSION['role'] >= 1) {

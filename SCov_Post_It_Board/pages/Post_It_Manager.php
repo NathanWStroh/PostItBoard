@@ -93,7 +93,7 @@ if (isset($_SESSION['id'])) {
             }
             ?><br><br>
             Additional Information: <br>
-            <input required='true' type='text' name='news' placeholder='More information about issues.' size='60'
+            <input required='true' type='text' name='news' placeholder='More information about issues.' maxlength="120" size='60'
             <?php
             if ($postItObj->getPostItID() != '') {
                 echo "value='" . $postItObj->getCurrentNews() . "'/>";
