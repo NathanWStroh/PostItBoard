@@ -53,7 +53,8 @@ $(document).ready(function () {
         $("body").tooltip({
             selector: '[data-toggle="tooltip"]',
             container: 'body',
-            position: 'top'
+            placement: 'bottom',
+            fontsize: 'px'
         });
     });
 });

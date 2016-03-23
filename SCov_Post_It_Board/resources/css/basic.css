@@ -43,6 +43,9 @@ th{
     background-color: #111;
 }
 
+.tooltip{
+    font-size: 24px;
+}
 #partners{
     -webkit-column-count: 3; /* Chrome, Safari, Opera */
     -moz-column-count: 3; /* Firefox */
