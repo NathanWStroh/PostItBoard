@@ -19,15 +19,12 @@ if (isset($_SESSION['id'])) {
         }
     }
     ?>
-    <head>
-        <script src="resources/js/TableFunctionality.js" type="text/javascript"></script>
-    </head>
 
     <body>
         <div id="listOfPostIts">
             <table id="tableOfPosts" class="table table-condensed updatePageTable" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
                 <thead>
-                    <tr><th hidden></th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Edit</th>
+                    <tr><th hidden></th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Updated Rep</th><th>Closed Rep</th><th>Edit</th>
                         <?php if ($_SESSION['role'] >= 1) {
                             echo '<th>Delete</th>';
                         } ?>
@@ -73,6 +70,8 @@ if (isset($_SESSION['id'])) {
                                 break;
                         }
                         echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
+                        echo '<td>' . $postItArray[$row]->getUpdatedRep() . '</td>';
+                        echo '<td>' . $postItArray[$row]->getClosedRep() . '</td>';
                         echo "<td><a href='Post_It_Manager.php?id=" . $postItArray[$row]->getPostItID() . "'><button class='btn btn-primary' type='button'>Edit</button></a></td>";
                         if ($_SESSION['role'] >= 1) {
                             echo "<td><input id='delete' class='btn btn-primary' type='submit' name='delete' value='Delete' onclick=\"return confirm('Are you sure you want to delete?');\"></td>";

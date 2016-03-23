@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nathan/Downloads/Documents/SCovProject/SCov_Post_It_Board/pages/Post_It_Manager.php</file>
+            <file>file:/C:/Users/nathan/Downloads/Documents/SCovProject/SCov_Post_It_Board/Logic/Post_It.php</file>
             <file>file:/C:/Users/nathan/Downloads/Documents/SCovProject/SCov_Post_It_Board/DatabaseConnections/PostItConnections.php</file>
+            <file>file:/C:/Users/nathan/Downloads/Documents/SCovProject/SCov_Post_It_Board/resources/js/SCOV_functionality.js</file>
+            <file>file:/C:/Users/nathan/Downloads/Documents/SCovProject/SCov_Post_It_Board/resources/Resource_Headers.php</file>
+            <file>file:/C:/Users/nathan/Downloads/Documents/SCovProject/SCov_Post_It_Board/pages/Home.php</file>
         </group>
     </open-files>
 </project-private>

@@ -129,9 +129,9 @@ if (isset($_SESSION['id'])) {
                     echo "<option value='1'>Closed</option>";
                 }
                 echo "</select><br><br>";
-
+                echo "Last Updated By: <br /><input disabled type= 'text' id='updatedRep' name='updatedRep' value='" . $postItObj->getUpdatedRep() . "'/><br><br>";
                 if ($postItObj->getEntryDate() != '') {
-                    echo "Ticket Opened: <br><input disabled type='text' id='entrydate'  name='entrydate' value=' ".$postItObj->getEntryDate() ."'/><br><br>";
+                    echo "Ticket Opened: <br><input disabled type='text' id='entrydate'  name='entrydate' value=' " . $postItObj->getEntryDate() . "'/><br><br>";
                 }
             }
             ?>

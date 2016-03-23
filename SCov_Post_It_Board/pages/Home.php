@@ -5,19 +5,17 @@ include_once '../resources/Resource_Headers.php';
 include_once '../Logic/Post_It.php';
 
 $PostItController = new Post_It();
+
 ?>
-<head>
-    <script src="resources/js/TableFunctionality.js" type="text/javascript"></script>
-</head>
 
 <body>
     <div id='tooltip' class='tooltip'>
         
     </div>
     <div id="listOfPostIts" class='panel-body'>
-        <table id="tableOfPosts" class="table table-condensed home" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
+        <table id="tableOfPosts" class="table table-condensed home" style='border-collapse:collapse' data-order='[[3,"DESC"]]' >
             <thead>
-                <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th></tr>
+                <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Updated Rep</th><th>Closed Rep</th></tr>
             </thead>
             <tbody>
                 <?php
@@ -41,9 +39,8 @@ $PostItController = new Post_It();
                         case 2:
                             echo "<tr  data-toggle='tooltip' data-placement='tooltip' title='".$postItArray[$row]->getCurrentNews()."'  style='background-color:orange;'><td>major</td> ";
                             break;
-                        default :
+                        default:
                             echo "<tr  data-toggle='tooltip' data-placement='tooltip' title='".$postItArray[$row]->getCurrentNews()."'><td>standard</td>";
-                            break;
                     }
                     echo '<td>' . $postItArray[$row]->getTeam() . '</td>';
                     echo '<td>' . $postItArray[$row]->getPartner() . '</td>';
@@ -62,6 +59,8 @@ $PostItController = new Post_It();
                             break;
                     }
                     echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
+                        echo '<td>' . $postItArray[$row]->getUpdatedRep() . '</td>';
+                        echo '<td>' . $postItArray[$row]->getClosedRep() . '</td>';
                     echo "</tr>";
                 }
                 ?>
