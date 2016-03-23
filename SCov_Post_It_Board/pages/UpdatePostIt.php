@@ -39,13 +39,13 @@ if (isset($_SESSION['id'])) {
                         $alert = intval($postItArray[$row]->getAlertStatus());
                         switch ($alert) {
                             case 0:
-                                echo "<tr>";
+                                echo "<tr data-toggle='tooltip'  title='".$postItArray[$row]->getCurrentNews()."'>";
                                 break;
                             case 1:
-                                echo "<tr style='background-color:yellow;'>";
+                                echo "<tr data-toggle='tooltip'  title='".$postItArray[$row]->getCurrentNews()."' style='background-color:yellow;'>";
                                 break;
                             case 2:
-                                echo "<tr  style='background-color:orange;'>";
+                                echo "<tr data-toggle='tooltip'  title='".$postItArray[$row]->getCurrentNews()."' style='background-color:orange;'>";
                                 break;
                             default :
                                 echo "<tr>";

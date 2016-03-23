@@ -49,10 +49,11 @@ $(document).ready(function () {
         gripInnerHtml: "<div class='grip'></div>",
         draggingClass: "dragging"});
 
-    $("#tableOfPosts td").tooltip({
-        tip: '#tooltip',
-        position: 'center right',
-        offset: [0, 15],
-        delay: 0
+    $(function () {
+        $("body").tooltip({
+            selector: '[data-toggle="tooltip"]',
+            container: 'body',
+            position: 'top'
+        });
     });
 });
