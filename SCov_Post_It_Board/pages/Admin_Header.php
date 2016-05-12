@@ -5,7 +5,7 @@ session_start();
 <header>
     <nav class="navbar navbar-default">
         <ul class="basicNav">
-            <li> <a href="../pages/home.php">Home</a></li>
+            <li> <a href="../pages/Home.php">Home</a></li>
             <?php
             if (isset($_SESSION['role'])) {
                 if ($_SESSION['role'] >= 0) {
@@ -16,6 +16,8 @@ session_start();
                 if ($_SESSION['role'] >= 1) {
                     echo '<li> <a href="../pages/User_Manager.php" >User Panel</a></li>';
                     echo '<li> <a href="../pages/Team_Manager.php" >Team Panel</a></li>';
+                }
+                if ($_SESSION['role'] >= 2) {
                     echo '<li> <a href="../pages/Reporting.php">Reporting</a></li>';
                 }
                 if ($_SESSION['role'] == 3) {

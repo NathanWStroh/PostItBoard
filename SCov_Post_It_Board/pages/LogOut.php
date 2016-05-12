@@ -6,4 +6,4 @@ unset($_SESSION['id']);
 unset($_SESSION['name']);
 unset($_SESSION['role']);
 
-header('Location: home.php');
+header('Location: ./Home.php');

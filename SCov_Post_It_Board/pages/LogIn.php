@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['role'] = $userObj->getRole();
 
             
-            header('Location: home.php');
+            header('Location: ./Home.php');
         }
 
             

@@ -61,7 +61,7 @@ if (isset($_SESSION['id'])) {
                 <?php
                 $teamList = $partnerTeamController->GetTeams();
 
-                for ($row = 1; $row < count($teamList); $row++) {
+                for ($row = 0; $row < count($teamList); $row++) {
                     if ($postItObj->getTeam() === $teamList[$row]->getTeamName()) {
                         echo "<option selected='selected' value='" . $teamList[$row]->getID() . "'>" . $teamList[$row]->getID() . ': ' . $teamList[$row]->getTeamName() . "</option>";
                     } else {
@@ -93,16 +93,16 @@ if (isset($_SESSION['id'])) {
             }
             ?><br><br>
             Additional Information: <br>
-            <input required='true' type='text' name='news' placeholder='More information about issues.' maxlength="120" size='60'
+            <textarea required='true' type='text' name='news' placeholder='More information about issues.' row='4' maxlength="120" cols='60'
             <?php
             if ($postItObj->getPostItID() != '') {
-                echo "value='" . $postItObj->getCurrentNews() . "'/>";
+                echo ">" . $postItObj->getCurrentNews() . "</textarea>";
             } else {
-                echo '/>';
+                echo '></textarea>';
             }
             ?><br><br>
             Post It Alert: 
-            <select name='alert'> class="dropdown-menu" aria-labelledby="alertType">            
+            <select name='alert' class="dropdown-menu" aria-labelledby="alertType">            
                 <option value="0"<?php
                 if ($postItObj->getAlertStatus() == 0) {
                     echo "selected='selected'";
@@ -129,9 +129,9 @@ if (isset($_SESSION['id'])) {
                     echo "<option value='1'>Closed</option>";
                 }
                 echo "</select><br><br>";
-                echo "Last Updated By: <br /><input disabled type= 'text' id='updatedRep' name='updatedRep' value='" . $postItObj->getUpdatedRep() . "'/><br><br>";
+
                 if ($postItObj->getEntryDate() != '') {
-                    echo "Ticket Opened: <br><input disabled type='text' id='entrydate'  name='entrydate' value=' " . $postItObj->getEntryDate() . "'/><br><br>";
+                    echo "Ticket Opened: <br><input disabled type='text' id='entrydate'  name='entrydate' value=' ".$postItObj->getEntryDate() ."'/><br><br>";
                 }
             }
             ?>

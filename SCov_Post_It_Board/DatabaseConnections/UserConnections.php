@@ -10,7 +10,7 @@ class UserConnections {
     function PullUsers($userRole) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = "SELECT u.a_id,u.a_username, u.a_fname,u.a_lname,ur.user_rights FROM scov_post_it.users u, scov_post_it.user_rights ur WHERE u.a_id = ur.a_id and user_rights <=" . $userRole . ";";
+        $query = "SELECT u.a_id,u.a_username, u.a_fname,u.a_lname,ur.user_rights FROM screport_settings.users_aliases u, scov_post_it.user_rights ur WHERE u.a_id = ur.a_id and user_rights <=" . $userRole . ";";
 
         $userList = array();
 
@@ -40,11 +40,10 @@ class UserConnections {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
 
-        $LogInQuery = "select * from users where a_username ='" . $username . "' and a_password ='" . $userPassword . "';";
+        $LogInQuery = "SELECT * FROM screport_settings.users_aliases WHERE a_username ='" . $username . "' and a_password = sha1('" .addslashes($userPassword). "');";
         $VerifyUserQuery = "SELECT a_id from scov_post_it.user_rights where a_id =";
         $CreateUserQuery = 'INSERT INTO scov_post_it.user_rights (a_id) Values (';
-        $GetUserInformationQuery = "select u.a_id, u.a_username, u.a_lname,u.a_fname,ur.user_rights from scov_post_it.users u, scov_post_it.user_rights ur where u.a_id = ur.a_id and u.a_id =";
-
+        $GetUserInformationQuery = "SELECT u.a_id, u.a_username, u.a_lname,u.a_fname,ur.user_rights from screport_settings.users_aliases u, scov_post_it.user_rights ur where u.a_id = ur.a_id and u.a_id =";
 
         try {
             $result = $dbconnection->query($LogInQuery);
@@ -86,7 +85,7 @@ class UserConnections {
                     }
                 }
             } else {
-                echo '<p style="color:red;">Username/Password does not exist in iTools.</p>';
+                echo '<p style="color:red;">Username/Password does not exist.</p>';
                 $dbconnection->close();
             }
         } catch (Exception $ex) {
@@ -127,7 +126,8 @@ class UserConnections {
 
         $query = 'SELECT rps.settings_id, rps.a_id, p.queue_name, rps.visible '
                 . 'FROM scov_post_it.rep_partner_settings rps, scov_post_it.partners p '
-                . 'where rps.partner_id = p.id and a_id =' . $userID . ';';
+                . 'where rps.partner_id = p.id and a_id =' . $userID
+                . ' ORDER BY p.queue_name;';
 
         try {
             $grabSettings = $dbconnection->query($query);

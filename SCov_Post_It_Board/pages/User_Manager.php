@@ -35,7 +35,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
 
     <body>
         <h3></h3>
-        <table id="tableOfPosts" class="table table-condensed userSettings">
+        <table id="tableOfPosts" class="table table-condensed userSettings"  style='border-collapse:collapse'>
             <thead>
                 <tr><td hidden></td><td>Username</td><td>First Name</td><td>Last Name</td><td>Role</td><td>Update</td><td>Delete</td></tr>
             </thead>

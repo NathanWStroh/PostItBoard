@@ -19,12 +19,15 @@ if (isset($_SESSION['id'])) {
         }
     }
     ?>
+    <head>
+        <script src="resources/js/TableFunctionality.js" type="text/javascript"></script>
+    </head>
 
     <body>
         <div id="listOfPostIts">
             <table id="tableOfPosts" class="table table-condensed updatePageTable" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
                 <thead>
-                    <tr><th hidden></th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Updated Rep</th><th>Closed Rep</th><th>Edit</th>
+                    <tr><th hidden></th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Edit</th>
                         <?php if ($_SESSION['role'] >= 1) {
                             echo '<th>Delete</th>';
                         } ?>
@@ -37,20 +40,24 @@ if (isset($_SESSION['id'])) {
                     for ($row = 0; $row < count($postItArray); $row++) {
                         $status = intval($postItArray[$row]->getStatus());
                         $alert = intval($postItArray[$row]->getAlertStatus());
-                        switch ($alert) {
-                            case 0:
-                                echo "<tr data-toggle='tooltip'  title='".$postItArray[$row]->getCurrentNews()."'>";
-                                break;
-                            case 1:
-                                echo "<tr data-toggle='tooltip'  title='".$postItArray[$row]->getCurrentNews()."' style='background-color:yellow;'>";
-                                break;
-                            case 2:
-                                echo "<tr data-toggle='tooltip'  title='".$postItArray[$row]->getCurrentNews()."' style='background-color:orange;'>";
-                                break;
-                            default :
-                                echo "<tr>";
-                                break;
-                        }
+                        if($status == 0){
+							switch ($alert) {
+								case 0:
+									echo "<tr>";
+									break;
+								case 1:
+									echo "<tr style='background-color:yellow;'>";
+									break;
+								case 2:
+									echo "<tr  style='background-color:orange;'>";
+									break;
+								default :
+									echo "<tr>";
+									break;
+							}
+						}else{
+							echo "<tr>";
+						}
                         echo "<form name='form" . $row . "' method='POST' action='" . $_SERVER['PHP_SELF'] . "'>";
                         echo "<td hidden><input type= 'text' name='postItID' value='" . $postItArray[$row]->getPostItID() . "'/></td>";
                         echo '<td>' . $postItArray[$row]->getTeam() . '</td>';
@@ -70,8 +77,6 @@ if (isset($_SESSION['id'])) {
                                 break;
                         }
                         echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
-                        echo '<td>' . $postItArray[$row]->getUpdatedRep() . '</td>';
-                        echo '<td>' . $postItArray[$row]->getClosedRep() . '</td>';
                         echo "<td><a href='Post_It_Manager.php?id=" . $postItArray[$row]->getPostItID() . "'><button class='btn btn-primary' type='button'>Edit</button></a></td>";
                         if ($_SESSION['role'] >= 1) {
                             echo "<td><input id='delete' class='btn btn-primary' type='submit' name='delete' value='Delete' onclick=\"return confirm('Are you sure you want to delete?');\"></td>";

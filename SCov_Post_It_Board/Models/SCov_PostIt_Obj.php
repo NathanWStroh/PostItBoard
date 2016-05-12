@@ -9,11 +9,11 @@ Last Modified: 2-2-2016
 <?php
 class PostIts {
 	//variables
-	private $id, $team, $partner, $issues, $issuedRep, $status, $alert,$news, $updatedRep, $closedRep; //strings
+	private $id, $team, $partner, $issues, $issuedRep, $status, $alert, $news, $closedRep; //strings
 	private $entryDate, $closeDate; //date
 
 	//getters
-        function getPostItID()      { return $this->id; }
+    function getPostItID()      { return $this->id; }
 	function getTeam()          { return $this->team; }
 	function getPartner()       { return $this->partner; }
 	function getIssues()        { return $this->issues; }
@@ -23,8 +23,7 @@ class PostIts {
 	function getCloseDate()     { return $this->closeDate; }
 	function getAlertStatus()   { return $this->alert; }
 	function getCurrentNews()   { return $this->news; }
-        function getUpdatedRep()    { return $this->updatedRep; }
-        function getClosedRep()     { return $this->closedRep; }
+	function getClosedRep()		{ return $this->closedRep; }
 	
 	//setters
 	function setPostItID ($id)          {$this->id = $id; }
@@ -35,8 +34,7 @@ class PostIts {
 	function setStatus($status)         {$this->status = $status; }
 	function setEntryDate($entryDate)   {$this->entryDate = $entryDate; }
 	function setCloseDate($closeDate)   {$this->closeDate = $closeDate; }
-        function setAlertStatus($alert)     {$this->alert = $alert; }
-        function setCurrentNews($news)      {$this->news = $news;           }
-        function setUpdatedRep($updatedRep) {$this->updatedRep = $updatedRep;}
-        function setClosedRep($closedRep)    {$this->closedRep = $closedRep;  }
+    function setAlertStatus($alert)     {$this->alert = $alert; }
+    function setCurrentNews($news)      {$this->news = $news; }
+	function setClosedRep($closedRep)	{$this->closedRep = $closedRep; }
 }

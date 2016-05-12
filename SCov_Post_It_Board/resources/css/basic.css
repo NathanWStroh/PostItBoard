@@ -19,6 +19,15 @@ th{
     resize: horizontal;
     overflow: auto;
 }
+tbody{
+    outline: 1px solid;
+}
+textarea {
+    resize: none;
+}
+.tooltip{
+    font-size: 14px;
+}
 .basicNav{
     list-style-type: none;
     margin: 0;
@@ -43,9 +52,6 @@ th{
     background-color: #111;
 }
 
-.tooltip{
-    font-size: 24px;
-}
 #partners{
     -webkit-column-count: 3; /* Chrome, Safari, Opera */
     -moz-column-count: 3; /* Firefox */

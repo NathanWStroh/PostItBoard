@@ -12,16 +12,16 @@ include_once 'Admin_Header.php';
 
 
 
-if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
+if (isset($_SESSION['id']) && $_SESSION['role'] >= 2) {
     $postItController = new Post_It();
-    $postItArray = $postItController->GrabPostIts();
+    $postItArray = $postItController->GrabPostItsForReporting();
     if (isset($_POST['filter'])) {
         try {
             $fromDate = $_POST['from'];
             $toDate = $_POST['to'];
             $postItArray = $postItController->FilterPostIts($fromDate, $toDate);
         } catch (Exception $ex) {
-            $postItArray = $postItController->GrabPostIts();
+            $postItArray = $postItController->GrabPostItsForReporting();
         }
     }
     
@@ -37,7 +37,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
             <label for="from">from</label>
             <input type="text" id="from" name="from" value="<?php
             if (isset($_POST['filter'])) {
-                echo $_POST['from'];   
+                echo $_POST['from'];
             }
             ?>"/>
             <label for="to">to</label>
@@ -56,7 +56,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
                 <input type="submit" name="export" id="export" value="Export" style="float:right; margin-top: -49px " class='btn btn-primary'/><br>
                 <table id="tableOfPosts" class="table table-condensed home" style='border-collapse:collapse' data-order='[[3,"DESC"]]'>
                     <thead>
-                        <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Updated Rep</th><th>Closed Rep</th></tr>
+                        <tr><th>Priority</th><th>Team</th><th>Partner</th><th>Entry Date/Time</th><th>Issues</th><th>Issued Rep</th><th>Status</th><th>Closure Date/Time</th><th>Closed Rep</th></tr>
                     </thead>
                     <tbody>
                         <?php
@@ -95,9 +95,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] >= 1) {
                                     break;
                             }
                             echo '<td>' . $postItArray[$row]->getCloseDate() . '</td>';
-                        echo '<td>' . $postItArray[$row]->getUpdatedRep() . '</td>';
-                        echo '<td>' . $postItArray[$row]->getClosedRep() . '</td>';
-                            
+                            echo '<td>' . $postItArray[$row]->getClosedRep() . '</td>';
                             echo "</tr>";
                             array_push($displayedPostItArray,$postItArray[$row]);
                         }

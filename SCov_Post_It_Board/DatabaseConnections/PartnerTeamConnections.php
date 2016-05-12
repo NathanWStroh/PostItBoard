@@ -10,7 +10,7 @@ class PartnerTeamConnections {
     function RetrievePartnerList() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'SELECT * FROM scov_post_it.partners ORDER BY queue_name;';
+        $query = 'SELECT id, queue_name, queue_number, scr_user_id, scr_group_name FROM scov_post_it.partners ORDER BY queue_name;';
 
         $partnerList = array();
         try {
@@ -40,10 +40,11 @@ class PartnerTeamConnections {
     function DeletePartner($partnerID) {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'DELETE FROM scov_post_it.partners WHERE id =' . $partnerID;
-
+        $query = "DELETE FROM scov_post_it.partners WHERE id =" . $partnerID;
+        $deleteRepSettings = "DELETE FROM scov_post_it.rep_partner_settings WHERE partner_id=" . $partnerID;
         try {
             $dbconnection->query($query);
+            $dbconnection->query($deleteRepSettings);
         } catch (Exception $ex) {
             echo '<p style="color:red;">An error has occured deleting the team name: ' . $ex->getMessage() . '</p>';
         }
@@ -54,7 +55,7 @@ class PartnerTeamConnections {
         $dbconnection = $connection->dbconnect();
 
         $query = "UPDATE scov_post_it.partners "
-                . "SET queue_name = '" . $partnerObj->getPartnerName() . "', queue_number=" . $partnerObj->getPartnerNumber() . ", scr_user_id =" . $partnerObj->getScrUserID() . ", scr_group_name='" . $partnerObj->getScrGroupName() . "' "
+                . "SET queue_name = '" . htmlspecialchars($partnerObj->getPartnerName(), ENT_QUOTES) . "', queue_number=" . $partnerObj->getPartnerNumber() . ", scr_user_id =" . $partnerObj->getScrUserID() . ", scr_group_name='" . htmlspecialchars($partnerObj->getScrGroupName(), ENT_QUOTES) . "' "
                 . "WHERE id =" . $partnerObj->getID() . ";";
 
         try {
@@ -69,13 +70,22 @@ class PartnerTeamConnections {
         $dbconnection = $connection->dbconnect();
 
         $query = "INSERT INTO scov_post_it.partners (queue_name, queue_number,scr_user_id,scr_group_name) "
-                . "VALUES ('" . $partnerObj->getPartnerName() . "', "
-                . $partnerObj->getPartnerNumber(). ", "
-                . $partnerObj->getScrUserID(). ", "
-                ."'". $partnerObj->getScrGroupName()."');";
+                . "VALUES ('" . htmlspecialchars($partnerObj->getPartnerName(), ENT_QUOTES) . "', "
+                . $partnerObj->getPartnerNumber() . ", "
+                . $partnerObj->getScrUserID() . ", "
+                . "'" . htmlspecialchars($partnerObj->getScrGroupName(), ENT_QUOTES) . "');";
+        $getNewPartnerID = "SELECT id FROM scov_post_it.partners WHERE queue_name='" . htmlspecialchars($partnerObj->getPartnerName(), ENT_QUOTES) . "' and queue_number='" . $partnerObj->getPartnerNumber() . "';";
 
         try {
             $dbconnection->query($query);
+            $partner = $dbconnection->query($getNewPartnerID);
+            if ($partner->num_rows == 1) {
+                while ($row = $partner->fetch_assoc()) {
+                    $partnerID = $row['id'];
+                }
+                $updateRepSettings = "INSERT INTO scov_post_it.rep_partner_settings (a_id,partner_id,visible) SELECT a_id," . $partnerID . ", 1 FROM scov_post_it.user_rights;";
+                $dbconnection->query($updateRepSettings);
+            }
         } catch (Exception $ex) {
             echo '<p style="color:red;">ERROR has occured when creating partner: ' . $ex->getMessage() . '</p>';
         }
@@ -84,7 +94,7 @@ class PartnerTeamConnections {
     function GrabTeams() {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
-        $query = 'Select * from scov_post_it.team;';
+        $query = 'SELECT team_id, team FROM scov_post_it.team;';
 
 
         $teamList = array();
@@ -113,7 +123,7 @@ class PartnerTeamConnections {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
 
-        $query = "INSERT INTO scov_post_it.team (team) VALUES ('" . $teamName . "');";
+        $query = "INSERT INTO scov_post_it.team (team) VALUES ('" . htmlspecialchars($teamName, ENT_QUOTES) . "');";
 
         try {
             $dbconnection->query($query);
@@ -126,7 +136,7 @@ class PartnerTeamConnections {
         $connection = new DBConnection();
         $dbconnection = $connection->dbconnect();
 
-        $query = "UPDATE scov_post_it.team SET team = '" . $teamName . "' WHERE team_id =" . $teamID . ";";
+        $query = "UPDATE scov_post_it.team SET team = '" . htmlspecialchars($teamName, ENT_QUOTES) . "' WHERE team_id =" . $teamID . ";";
 
         try {
             $dbconnection->query($query);
